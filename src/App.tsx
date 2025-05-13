@@ -6,6 +6,7 @@ import FAQ from './pages/FAQ';
 import CadastrarAnimal from './pages/CadastrarAnimal';
 import CadastroUsuario from './pages/CadastroUsuario';
 import Login from './pages/Login';
+import TelaAdocao from './pages/TelaAdocao';
 import NotFound from './pages/NotFound';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route path="/sobre" element={<SobreNos />} />
         <Route path="/faq" element={<FAQ />} />
         <Route path="/cadastrarPet" element={<CadastrarAnimal />} />
+        <Route path="/adocao" element={<TelaAdocao />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>

@@ -70,6 +70,7 @@ const pets: {
 export const Home = () => {
     return (
         <div style={{ paddingTop: '70px' }}>
+
             <Navbar />
             <Box
                 sx={{

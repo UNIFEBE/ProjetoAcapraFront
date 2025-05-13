@@ -1,4 +1,3 @@
-// src/componentes/Navbar/Navbar.tsx
 import styles from './Navbar.module.css';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
