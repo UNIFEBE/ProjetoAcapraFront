@@ -7,6 +7,7 @@ import CadastrarAnimal from './pages/CadastrarAnimal';
 import CadastroUsuario from './pages/CadastroUsuario';
 import Login from './pages/Login';
 import NotFound from './pages/NotFound';
+import RecuperarSenha from './pages/recuperarSenha';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/sobre" element={<SobreNos />} />
         <Route path="/faq" element={<FAQ />} />
         <Route path="/cadastrarPet" element={<CadastrarAnimal />} />
+        <Route path="/recuperarSenha" element={<RecuperarSenha />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
