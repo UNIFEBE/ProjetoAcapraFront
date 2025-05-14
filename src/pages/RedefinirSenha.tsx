@@ -10,12 +10,11 @@ import {
     Paper,
     Link
 } from '@mui/material';
-import { Eye, EyeOff, Account, LockOutline } from 'mdi-material-ui';
+import { Eye, EyeOff, LockOutline } from 'mdi-material-ui';
 import { useState } from 'react';
 import AcapraLogo from '../assets/acapraLogo.png';
 
-
-const Login = () => {
+const RecuperarSenha = () => {
     const [showPassword, setShowPassword] = useState(false);
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -81,25 +80,37 @@ const Login = () => {
                 />
 
                 <Typography variant="h6" sx={{ fontWeight: 500, mb: 0.5 }}>
-                    Bem-vindo à Acapra!
+                    Alteração de Senha
                 </Typography>
                 <Typography variant="body2" sx={{ color: '#ada5b4', mb: 4 }}>
-                    Garanta um lar para seu futuro melhor amigo.
+                    Insira a sua nova senha abaixo
                 </Typography>
 
-                {/* Campo de E-mail */}
+                {/* Campo de Senha Nova */}
                 <FormControl fullWidth variant="outlined" margin="dense">
                     <InputLabel htmlFor="email" sx={{ color: '#54507E' }}>
-                        E-mail
+                        Nova Senha
                     </InputLabel>
                     <OutlinedInput
-                        id="email"
-                        type="email"
-                        label="E-mail"
+                        id="novaSenha"
+                        type={showPassword ? 'text' : 'password'}
+                        label="Nova Senha"
                         required
                         startAdornment={
                             <InputAdornment position="start">
-                                <Account sx={{ color: '#54507E' }} />
+                                <LockOutline sx={{ color: '#54507E' }} />
+                            </InputAdornment>
+                        }
+                        endAdornment={
+                            <InputAdornment position="end">
+                                <IconButton
+                                    onClick={handleClickShowPassword}
+                                    onMouseDown={handleMouseDownPassword}
+                                    edge="end"
+                                    sx={{ color: '#54507E' }}
+                                >
+                                    {showPassword ? <EyeOff /> : <Eye />}
+                                </IconButton>
                             </InputAdornment>
                         }
                         sx={{
@@ -120,15 +131,15 @@ const Login = () => {
                     />
                 </FormControl>
 
-                {/* Campo de Senha */}
+                {/* Campo de Confirmação de Senha */}
                 <FormControl fullWidth variant="outlined" margin="dense">
-                    <InputLabel htmlFor="password" sx={{ color: '#54507E' }}>
-                        Senha
+                    <InputLabel htmlFor="confirmaSenha" sx={{ color: '#54507E' }}>
+                        Confirmar Senha
                     </InputLabel>
                     <OutlinedInput
-                        id="password"
+                        id="confirmaSenha"
                         type={showPassword ? 'text' : 'password'}
-                        label="Senha"
+                        label="Confirmar Senha"
                         required
                         startAdornment={
                             <InputAdornment position="start">
@@ -181,16 +192,16 @@ const Login = () => {
                         },
                     }}
                 >
-                    Entrar
+                    Alterar Senha
                 </Button>
 
-                {/* Esqueci a senha */}
+                {/* Fazer Login */}
                 <Link
-                    href="/recuperarSenha"
+                    href="/login"
                     underline="hover"
                     sx={{ mt: 2, fontSize: 14, color: '#54507E' }}
                 >
-                    Esqueceu sua senha?
+                    Faça Login Já!
                 </Link>
 
                 {/* Cadastro */}
@@ -205,4 +216,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default RecuperarSenha;
