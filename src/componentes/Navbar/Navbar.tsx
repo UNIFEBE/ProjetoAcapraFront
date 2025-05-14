@@ -40,7 +40,7 @@ const Navbar = () => {
             <Link to="/cadastrarPet" onClick={() => setMenuAberto(false)}>
               Cadastrar Pet
             </Link>
-            <Link to="/servico3" onClick={() => setMenuAberto(false)}>
+            <Link to="/formularioAdocao" onClick={() => setMenuAberto(false)}>
               Cadastrar Formulário
             </Link>
           </div>

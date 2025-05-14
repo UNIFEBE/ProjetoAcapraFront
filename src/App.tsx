@@ -9,6 +9,7 @@ import Login from './pages/Login';
 import NotFound from './pages/NotFound';
 import RecuperarSenha from './pages/RecuperarSenha';
 import RedefinirSenha from './pages/RedefinirSenha';
+import FormularioAdocao from './pages/FormularioAdocao';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/cadastrarPet" element={<CadastrarAnimal />} />
         <Route path="/recuperarSenha" element={<RecuperarSenha />} />
         <Route path="/redefinirSenha" element={<RedefinirSenha />} />
+        <Route path="/formularioAdocao" element={<FormularioAdocao/>} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
