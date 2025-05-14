@@ -10,6 +10,3 @@ export const SobreNos = () => {
 }
 
 export default SobreNos;
-
-
-// teste git lipe

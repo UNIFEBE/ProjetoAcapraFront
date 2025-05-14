@@ -5,20 +5,32 @@ import {
     OutlinedInput,
     InputLabel,
     InputAdornment,
-    IconButton,
     FormControl,
     Paper,
     Link
 } from '@mui/material';
-import { Eye, EyeOff, Account, LockOutline } from 'mdi-material-ui';
-import { useState } from 'react';
+import { Account } from 'mdi-material-ui';
+import { useEffect, useState } from 'react';
+import AlertEmail from "../componentes/Alerts/AlertEmail";
 import AcapraLogo from '../assets/acapraLogo.png';
 
 const RecuperarSenha = () => {
-    const [showPassword, setShowPassword] = useState(false);
 
-    const handleClickShowPassword = () => setShowPassword((show) => !show);
-    const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => event.preventDefault();
+    const [mensagemEnviada, setMensagemEnviada] = useState(false);
+
+    const verificaEmail = () =>{
+        setMensagemEnviada(true);
+    }
+
+    useEffect(() => {
+    if (!mensagemEnviada) return;
+
+    const timer = setTimeout(() => {
+      setMensagemEnviada(false);
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, [mensagemEnviada]);
 
     return (
         <Box
@@ -80,92 +92,49 @@ const RecuperarSenha = () => {
                 />
 
                 <Typography variant="h6" sx={{ fontWeight: 500, mb: 0.5 }}>
-                    Bem-vindo à Acapra!
+                    Recuperação de Senha
                 </Typography>
                 <Typography variant="body2" sx={{ color: '#ada5b4', mb: 4 }}>
-                    Garanta um lar para seu futuro melhor amigo.
+                    Enviaremos um e-mail com um link para a recuperação de sua senha
                 </Typography>
 
-                {/* Campo de E-mail */}
+                {/* Campo de Senha Nova */}
                 <FormControl fullWidth variant="outlined" margin="dense">
-                    <InputLabel htmlFor="email" sx={{ color: '#54507E' }}>
-                        E-mail
-                    </InputLabel>
-                    <OutlinedInput
-                        id="email"
-                        type="email"
-                        label="E-mail"
-                        required
-                        startAdornment={
-                            <InputAdornment position="start">
-                                <Account sx={{ color: '#54507E' }} />
-                            </InputAdornment>
-                        }
-                        sx={{
-                            background: '#f4f1f7',
-                            borderRadius: 2,
-                            fontSize: 15,
-                            '& .MuiOutlinedInput-notchedOutline': {
-                                borderColor: 'transparent',
-                            },
-                            '&:hover .MuiOutlinedInput-notchedOutline': {
-                                borderColor: '#bdbdbd',
-                            },
-                            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                                borderColor: '#54507E',
-                                borderWidth: 2,
-                            },
-                        }}
-                    />
-                </FormControl>
-
-                {/* Campo de Senha */}
-                <FormControl fullWidth variant="outlined" margin="dense">
-                    <InputLabel htmlFor="password" sx={{ color: '#54507E' }}>
-                        Senha
-                    </InputLabel>
-                    <OutlinedInput
-                        id="password"
-                        type={showPassword ? 'text' : 'password'}
-                        label="Senha"
-                        required
-                        startAdornment={
-                            <InputAdornment position="start">
-                                <LockOutline sx={{ color: '#54507E' }} />
-                            </InputAdornment>
-                        }
-                        endAdornment={
-                            <InputAdornment position="end">
-                                <IconButton
-                                    onClick={handleClickShowPassword}
-                                    onMouseDown={handleMouseDownPassword}
-                                    edge="end"
-                                    sx={{ color: '#54507E' }}
-                                >
-                                    {showPassword ? <EyeOff /> : <Eye />}
-                                </IconButton>
-                            </InputAdornment>
-                        }
-                        sx={{
-                            background: '#f4f1f7',
-                            borderRadius: 2,
-                            fontSize: 15,
-                            '& .MuiOutlinedInput-notchedOutline': {
-                                borderColor: 'transparent',
-                            },
-                            '&:hover .MuiOutlinedInput-notchedOutline': {
-                                borderColor: '#bdbdbd',
-                            },
-                            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                                borderColor: '#54507E',
-                                borderWidth: 2,
-                            },
-                        }}
-                    />
-                </FormControl>
+                                    <InputLabel htmlFor="emailRecuperacao" sx={{ color: '#54507E' }}>
+                                        E-mail de Recuperação
+                                    </InputLabel>
+                                    <OutlinedInput
+                                        id="emailRecuperacao"
+                                        type="email"
+                                        label="E-mail de Recuperação"
+                                        required
+                                        startAdornment={
+                                            <InputAdornment position="start">
+                                                <Account sx={{ color: '#54507E' }} />
+                                            </InputAdornment>
+                                        }
+                                        sx={{
+                                            background: '#f4f1f7',
+                                            borderRadius: 2,
+                                            fontSize: 15,
+                                            '& .MuiOutlinedInput-notchedOutline': {
+                                                borderColor: 'transparent',
+                                            },
+                                            '&:hover .MuiOutlinedInput-notchedOutline': {
+                                                borderColor: '#bdbdbd',
+                                            },
+                                            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                                borderColor: '#54507E',
+                                                borderWidth: 2,
+                                            },
+                                        }}
+                                    />
+                                </FormControl>
 
                 {/* Botão Entrar */}
                 <Button
+                    onClick={verificaEmail}
+                    disabled={mensagemEnviada}
                     fullWidth
                     variant="contained"
                     sx={{
@@ -180,16 +149,22 @@ const RecuperarSenha = () => {
                         },
                     }}
                 >
-                    Entrar
+                    {mensagemEnviada ? 'Enviado!' : 'Enviar e-mail'}
                 </Button>
 
-                {/* Esqueci a senha */}
+                {mensagemEnviada && (
+                    <AlertEmail>
+                    Um email foi enviado com um link para a redefinição de sua senha
+                    </AlertEmail>
+                )}
+
+                {/* Fazer Login */}
                 <Link
-                    href="#"
+                    href="/login"
                     underline="hover"
                     sx={{ mt: 2, fontSize: 14, color: '#54507E' }}
                 >
-                    Esqueceu sua senha?
+                    Faça Login Já!
                 </Link>
 
                 {/* Cadastro */}
