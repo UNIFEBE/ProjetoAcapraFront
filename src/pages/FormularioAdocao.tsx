@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import Navbar from '../componentes/Navbar/Navbar';
+import Navbar from '../componentes/Navbar/Navbar'
+import InputText from '../componentes/inputs/inputText/InputText';
 import {
     Box,
     Paper,
@@ -82,26 +83,10 @@ export default function FormularioAdocao() {
                                     alignItems="center"
                                 >
                                     <Grid sx={{ p: 2 }}>
-                                        <TextField
-                                            fullWidth
-                                            label="Nome Completo"
-                                            name="nome"
-                                            value={form.nome}
-                                            onChange={handleChange}
-                                            variant="outlined"
-                                            required
-                                        />
+                                        <InputText titulo={"Nome Completo"} nome={"nome"} valor={form.nome}/>
                                     </Grid>
                                     <Grid sx={{ p: 2 }}>
-                                        <TextField
-                                            fullWidth
-                                            label="CPF"
-                                            name="cpf"
-                                            value={form.cpf}
-                                            onChange={handleChange}
-                                            variant="outlined"
-                                            required
-                                        />
+                                        <InputText titulo={"CPF"} nome={"cpf"} valor={form.cpf}/>
                                     </Grid>
                                 </Grid>
                                 <Grid

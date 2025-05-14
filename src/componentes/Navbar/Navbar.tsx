@@ -54,7 +54,7 @@ const Navbar = () => {
         <div className={styles.userDropdown}>
           <Link to="/perfil">Perfil</Link>
           <Link to="/configuracoes">Configurações</Link>
-          <button onClick={handleLogout}>Desconectar</button>
+          <Link to="/login">Desconectar</Link>
         </div>
       </div>
     </header>
