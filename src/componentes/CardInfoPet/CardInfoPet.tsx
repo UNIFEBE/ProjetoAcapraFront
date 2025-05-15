@@ -32,13 +32,13 @@ const CardInfoPet: React.FC<CardInfoPetProps> = ({ titulo, valor, tipo }) => {
     return (
         <Box
             sx={{
-                padding: 2,
+                padding: '5px',
                 borderRadius: 2,
                 backgroundColor: backgroundColors[tipo],
                 boxShadow: 3,
                 color: 'white',
-                width: 80,
-                height: 80,
+                width: '70px',
+                height: '70px',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center',
