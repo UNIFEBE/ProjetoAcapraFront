@@ -6,6 +6,7 @@ import FAQ from './pages/FAQ';
 import CadastrarAnimal from './pages/CadastrarAnimal';
 import CadastroUsuario from './pages/CadastroUsuario';
 import Login from './pages/Login';
+import TelaAdocao from './pages/TelaAdocao';
 import NotFound from './pages/NotFound';
 import RecuperarSenha from './pages/RecuperarSenha';
 import RedefinirSenha from './pages/RedefinirSenha';
@@ -22,10 +23,12 @@ function App() {
         <Route path="/sobre" element={<SobreNos />} />
         <Route path="/faq" element={<FAQ />} />
         <Route path="/cadastrarPet" element={<CadastrarAnimal />} />
+        <Route path="/adocao" element={<TelaAdocao />} />
         <Route path="/recuperarSenha" element={<RecuperarSenha />} />
         <Route path="/redefinirSenha" element={<RedefinirSenha />} />
         <Route path="/formularioAdocao" element={<FormularioAdocao/>} />
         <Route path="/CadastrarFormulario" element={<CadastrarFormulario/>} />
+
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>

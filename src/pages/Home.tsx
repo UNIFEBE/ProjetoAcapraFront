@@ -1,6 +1,7 @@
 import CardPet from "../componentes/CardPet/CardPet";
 import Navbar from "../componentes/Navbar/Navbar";
 import { Box } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const pets: {
     nome: string;
@@ -68,8 +69,14 @@ const pets: {
     ];
 
 export const Home = () => {
+    const navigate = useNavigate();
+
+    const handleCardClick = (pet: any) => {
+        navigate('/adocao', { state: { pet } });
+    };
+
     return (
-        <div style={{ paddingTop: '70px' }}>
+        <div style={{ paddingTop: '80px' }}>
             <Navbar />
             <Box
                 sx={{
@@ -83,16 +90,25 @@ export const Home = () => {
                 }}
             >
                 {pets.map((pet, index) => (
-                    <CardPet
-                        key={index}
-                        nome={pet.nome}
-                        raca={pet.raca}
-                        idade={pet.idade}
-                        cidade={pet.cidade}
-                        bairro={pet.bairro}
-                        imagem={pet.imagem}
-                        genero={pet.genero}
-                    />
+                    <Box key={index} onClick={() => handleCardClick(pet)} sx={{
+                        cursor: 'pointer',
+                        transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                        '&:hover': {
+                            transform: 'scale(1.05)',
+                            boxShadow: '0 12px 24px rgba(255, 167, 38, 0.4)', // sombra laranja suave
+                        },
+                        borderRadius: 3,
+                    }}>
+                        <CardPet
+                            nome={pet.nome}
+                            raca={pet.raca}
+                            idade={pet.idade}
+                            cidade={pet.cidade}
+                            bairro={pet.bairro}
+                            imagem={pet.imagem}
+                            genero={pet.genero}
+                        />
+                    </Box>
                 ))}
             </Box>
         </div>

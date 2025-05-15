@@ -50,16 +50,6 @@ export const CadastrarAnimal = () => {
                 >
                     <Typography variant="body1" align="center">Imagem do pet</Typography>
 
-                    <Pencil
-                        sx={{
-                            position: 'absolute',
-                            top: 85,
-                            right: 15,
-                            color: '#54507E',
-                            cursor: 'pointer'
-                        }}
-                    />
-                    
                 </Box>
 
                 {/* Formulário */}
@@ -100,9 +90,9 @@ export const CadastrarAnimal = () => {
                     </Box>
 
                     <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2, mt: 3 }}>
-                        <Button variant="contained" color="warning">EDITAR</Button>
-                        <Button variant="contained" color="warning">CANCELAR</Button>
-                        <Button variant="contained" sx={{ backgroundColor: '#f68b1f' }}>SALVAR</Button>
+                        <Button variant="contained" sx={{background: '#5a4b81'}}>EDITAR</Button>
+                        <Button variant="contained" sx={{background: 'red'}} href="/">CANCELAR</Button>
+                        <Button variant="contained" sx={{ backgroundColor: 'green' }}>SALVAR</Button>
                     </Box>
                 </Box>
             </Box>
