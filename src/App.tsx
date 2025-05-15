@@ -10,6 +10,7 @@ import NotFound from './pages/NotFound';
 import RecuperarSenha from './pages/RecuperarSenha';
 import RedefinirSenha from './pages/RedefinirSenha';
 import FormularioAdocao from './pages/FormularioAdocao';
+import CadastrarFormulario from './pages/CadastrarFormulario';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/recuperarSenha" element={<RecuperarSenha />} />
         <Route path="/redefinirSenha" element={<RedefinirSenha />} />
         <Route path="/formularioAdocao" element={<FormularioAdocao/>} />
+        <Route path="/CadastrarFormulario" element={<CadastrarFormulario/>} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>

@@ -30,29 +30,28 @@ export default function FormularioAdocao() {
 
                     <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
 
-                        <InputText htmlFor={"nome"} label={"Nome Completo"} id={"nome"} inputLabel={"Nome Completo"} />
-                        <InputText htmlFor={"cpf"} label={"CPF"} id={"cpf"} inputLabel={"CPF"} />
+                        <InputText htmlFor={"nome"} label={"Nome Completo"} id={"nome"} inputLabel={"Nome Completo"} tamanho={'48'} />
+                        <InputText htmlFor={"cpf"} label={"CPF"} id={"cpf"} inputLabel={"CPF"} tamanho={'48'}/>
 
                     </Box>
 
                     <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
 
-                        <InputText htmlFor={"email"} label={"E-mail"} id={"email"} inputLabel={"E-mail"} />
-                        <InputText htmlFor={"telefone"} label={"Telefone"} id={"telefone"} inputLabel={"Telefone"} />
+                        <InputText htmlFor={"email"} label={"E-mail"} id={"email"} inputLabel={"E-mail"} tamanho={'48'}/>
+                        <InputText htmlFor={"telefone"} label={"Telefone"} id={"telefone"} inputLabel={"Telefone"} tamanho={'48'}/>
 
                     </Box>
-s
                     <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
 
-                        <InputText htmlFor={"cep"} label={"CEP"} id={"cep"} inputLabel={"CEP"} />
-                        <InputText htmlFor={"tipoResidencia"} label={"Tipo de Residência"} id={"tipoResidencia"} inputLabel={"Tipo de Residência"} />
+                        <InputText htmlFor={"cep"} label={"CEP"} id={"cep"} inputLabel={"CEP"} tamanho={'48'}/>
+                        <InputText htmlFor={"tipoResidencia"} label={"Tipo de Residência"} id={"tipoResidencia"} inputLabel={"Tipo de Residência"} tamanho={'48'}/>
 
                     </Box>
 
                     <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
 
-                        <InputText htmlFor={"dataNascimento"} label={"Data de Nascimento"} id={"dataNascimento"} inputLabel={"Data de Nascimento"} />
-                        <InputText htmlFor={"sexo"} label={"Sexo"} id={"sexo"} inputLabel={"Sexo"} />
+                        <InputText htmlFor={"dataNascimento"} label={"Data de Nascimento"} id={"dataNascimento"} inputLabel={"Data de Nascimento"} tamanho={'48'}/>
+                        <InputText htmlFor={"sexo"} label={"Sexo"} id={"sexo"} inputLabel={"Sexo"} tamanho={'48'}/>
 
                     </Box>
 

@@ -1,5 +1,4 @@
 import { FormControl, InputLabel, OutlinedInput } from '@mui/material'
-import styles from "../InputText/InputText.module.css"
 
 interface InputTextProps {
 
@@ -7,10 +6,13 @@ interface InputTextProps {
     label: string;
     id: string;
     inputLabel: string;
+    tamanho: string
 
 }
 
-const InputText: React.FC<InputTextProps> = ({ htmlFor, label, id, inputLabel }) => {
+const InputText: React.FC<InputTextProps> = ({ htmlFor, label, id, inputLabel, tamanho }) => {
+
+    const tamanhoPercent = tamanho+'%';
 
     const inputStyle = {
         background: '#f4f1f7',
@@ -29,7 +31,7 @@ const InputText: React.FC<InputTextProps> = ({ htmlFor, label, id, inputLabel })
     };
 
     const inputBoxStyle = {
-        width: '48%',
+        width: tamanhoPercent,
         marginBottom: 2
     };
 

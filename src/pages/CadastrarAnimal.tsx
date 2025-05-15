@@ -67,22 +67,22 @@ export const CadastrarAnimal = () => {
 
                     <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
 
-                        <InputText htmlFor={"animal"} label={"Animal"} id={"animal"} inputLabel={"Animal"} />
-                        <InputText htmlFor={"sexo"} label={"Sexo"} id={"sexo"} inputLabel={"Sexo"} />
+                        <InputText htmlFor={"animal"} label={"Animal"} id={"animal"} inputLabel={"Animal"} tamanho={'48'}/>
+                        <InputText htmlFor={"sexo"} label={"Sexo"} id={"sexo"} inputLabel={"Sexo"} tamanho={'48'}/>
 
                     </Box>                        
 
                     <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                         
-                        <InputText htmlFor={"raca"} label={"Raça"} id={"raca"} inputLabel={"Raça"} />
-                        <InputText htmlFor={"nascimento"} label={"Data de Nascimento"} id={"nascimento"} inputLabel={"Data de Nascimento"} />
+                        <InputText htmlFor={"raca"} label={"Raça"} id={"raca"} inputLabel={"Raça"} tamanho={'48'}/>
+                        <InputText htmlFor={"nascimento"} label={"Data de Nascimento"} id={"nascimento"} inputLabel={"Data de Nascimento"} tamanho={'48'}/>
                     
                     </Box>
 
                     <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
 
-                        <InputText htmlFor={"pelagem"} label={"Pelagem"} id={"pelagem"} inputLabel={"Pelagem"} />
-                        <InputText htmlFor={"responsavel"} label={"Nome do Responsável"} id={"responsavel"} inputLabel={"Nome do Responsável"} />
+                        <InputText htmlFor={"pelagem"} label={"Pelagem"} id={"pelagem"} inputLabel={"Pelagem"} tamanho={'48'}/>
+                        <InputText htmlFor={"responsavel"} label={"Nome do Responsável"} id={"responsavel"} inputLabel={"Nome do Responsável"} tamanho={'48'}/>
 
                     </Box>
 
