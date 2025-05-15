@@ -1,8 +1,3 @@
-import { FormControl, InputLabel, OutlinedInput } from '@mui/material'
-import ImgSobreNos1 from "../assets/ImgSobreNos1.png"
-import imgSobreNos2 from "../assets/ImgSobreNos2.png"
-import imgSobreNos3 from "../assets/ImgSobreNos3.png"
-import patinhas from "../assets/Patinhas.png"
 
 interface TextImageProps { 
     image: string; 
