@@ -1,4 +1,5 @@
 import Navbar from "../componentes/Navbar/Navbar";
+import InputText from "../componentes/inputs/inputText/InputText";
 import {
     Box,
     Button,
@@ -78,27 +79,17 @@ export const CadastrarAnimal = () => {
                 <Box sx={{ flex: 1,}}>
 
                     <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <FormControl sx={inputBoxStyle} variant="outlined" margin="dense">
-                            <InputLabel htmlFor="animal" sx={{ color: '#54507E' }}>Animal</InputLabel>
-                            <OutlinedInput id="animal" label="Animal" sx={inputStyle} required />
-                        </FormControl>
 
-                        <FormControl sx={inputBoxStyle} variant="outlined" margin="dense">
-                            <InputLabel htmlFor="sexo" sx={{ color: '#54507E' }}>Sexo</InputLabel>
-                            <OutlinedInput id="sexo" label="Sexo" sx={inputStyle} required />
-                        </FormControl>
+                        <InputText htmlFor={"animal"} label={"Animal"} id={"animal"} inputLabel={"Animal"} />
+                        <InputText htmlFor={"sexo"} label={"Sexo"} id={"sexo"} inputLabel={"Sexo"} />
+
                     </Box>                        
 
                     <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <FormControl sx={inputBoxStyle} variant="outlined" margin="dense">
-                            <InputLabel htmlFor="raca" sx={{ color: '#54507E' }}>Raça</InputLabel>
-                            <OutlinedInput id="raca" label="Raça" sx={inputStyle} required />
-                        </FormControl>
-
-                        <FormControl sx={inputBoxStyle} variant="outlined" margin="dense">
-                            <InputLabel htmlFor="nascimento" sx={{ color: '#54507E' }}>Data de Nascimento</InputLabel>
-                            <OutlinedInput id="nascimento" label="Data de Nascimento" sx={inputStyle} required />
-                        </FormControl>
+                        
+                        <InputText htmlFor={"raca"} label={"Raça"} id={"raca"} inputLabel={"Raça"} />
+                        <InputText htmlFor={"nascimento"} label={"Data de Nascimento"} id={"nascimento"} inputLabel={"Data de Nascimento"} />
+                    
                     </Box>
 
                     <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>

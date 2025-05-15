@@ -14,6 +14,7 @@ import { Eye, EyeOff, Account, LockOutline } from 'mdi-material-ui';
 import { useState } from 'react';
 import AcapraLogo from '../assets/acapraLogo.png';
 
+
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
 
@@ -185,7 +186,7 @@ const Login = () => {
 
                 {/* Esqueci a senha */}
                 <Link
-                    href="#"
+                    href="/recuperarSenha"
                     underline="hover"
                     sx={{ mt: 2, fontSize: 14, color: '#54507E' }}
                 >
