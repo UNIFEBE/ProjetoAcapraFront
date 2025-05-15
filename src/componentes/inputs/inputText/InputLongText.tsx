@@ -1,18 +1,15 @@
 import { FormControl, InputLabel, OutlinedInput } from '@mui/material'
 
-interface InputTextProps {
+interface InputLongTextProps {
 
     htmlFor: string;
     label: string;
     id: string;
     inputLabel: string;
-    tamanho: string
 
 }
 
-const InputText: React.FC<InputTextProps> = ({ htmlFor, label, id, inputLabel, tamanho }) => {
-
-    const tamanhoPercent = tamanho+'%';
+const InputLongText: React.FC<InputLongTextProps> = ({ htmlFor, label, id, inputLabel }) => {
 
     const inputStyle = {
         background: '#f4f1f7',
@@ -31,18 +28,25 @@ const InputText: React.FC<InputTextProps> = ({ htmlFor, label, id, inputLabel, t
     };
 
     const inputBoxStyle = {
-        width: tamanhoPercent,
+        width: '48%',
         marginBottom: 2
     };
 
     return (
         <>
-            <FormControl sx={inputBoxStyle} variant="outlined" margin="dense">
+            <FormControl fullWidth variant="outlined" margin="dense">
                 <InputLabel htmlFor={htmlFor} sx={{ color: '#54507E' }}>{label}</InputLabel>
-                <OutlinedInput id={id} label={inputLabel} sx={inputStyle} required />
+                <OutlinedInput
+                    id={id}
+                    label={label}
+                    sx={inputStyle}
+                    multiline
+                    rows={4}
+                    required
+                />
             </FormControl>
         </>
     )
 }
 
-export default InputText
+export default InputLongText
