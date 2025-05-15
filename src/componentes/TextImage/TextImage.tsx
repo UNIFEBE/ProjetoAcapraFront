@@ -6,7 +6,7 @@ interface TextImageProps {
     altSobreNos: string;
     children?: React.ReactNode;
     isDireita: boolean;
-    patinhaEsquerda: boolean;
+    patinhaEsquerda?: boolean;
 
 }
 
