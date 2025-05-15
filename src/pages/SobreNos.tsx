@@ -4,6 +4,7 @@ import ImgSobreNos1 from "../assets/ImgSobreNos1.png"
 import imgSobreNos2 from "../assets/ImgSobreNos2.png"
 import imgSobreNos3 from "../assets/ImgSobreNos3.png"
 import patinhas from "../assets/Patinhas.png"
+import TextImage from "../componentes/TextImage/TextImage"
 
 export const SobreNos = () => {
       const container = {
@@ -15,7 +16,7 @@ export const SobreNos = () => {
 
         <div style={{ paddingTop: '70px'}} >
             <Navbar />
-
+            {/* <TextImage altImg={patinhas} image={patinhas} imgSobreNos={ImgSobreNos1} altSobreNos={"imagem 1"} ImgDireita={"row"} texto={" A ACAPRA, atualmente denominada como Associação Brusquense de Proteção aos animais, foi fundada em Março de 1999, porém funcionava como uma filial da ACAPRA – Associação Catarinense de Proteção aos animais situada em Florianópolis. Esta filial foi fundada em média por treze voluntários, e presidida pela Sra. Dulcinea Coelho..."}/> */}
             <div style={{ padding: "40px 20px", maxWidth: "1100px", margin: "0 auto" }}>
 
                  {/* Bloco 1 */}
