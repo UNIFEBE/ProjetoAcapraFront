@@ -180,7 +180,7 @@ const Login = () => {
                             backgroundColor: '#3f3b65',
                         },
                     }}
-                >
+                href='/'>
                     Entrar
                 </Button>
 

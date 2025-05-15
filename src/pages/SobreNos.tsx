@@ -3,6 +3,8 @@ import Navbar from "../componentes/Navbar/Navbar";
 import ImgSobreNos1 from "../assets/ImgSobreNos1.png"
 import imgSobreNos2 from "../assets/ImgSobreNos2.png"
 import imgSobreNos3 from "../assets/ImgSobreNos3.png"
+import patinhas from "../assets/Patinhas.png"
+import TextImage from "../componentes/TextImage/TextImage"
 
 export const SobreNos = () => {
       const container = {
@@ -12,25 +14,43 @@ export const SobreNos = () => {
   };
     return (
 
-        <div style={{ paddingTop: '70px' }} >
+        <div style={{ paddingTop: '70px'}} >
             <Navbar />
-                        <div Style={{ padding: "40px 20px", maxWidth: "1100px", margin: "0 auto" }}>
+            {/* <TextImage altImg={patinhas} image={patinhas} imgSobreNos={ImgSobreNos1} altSobreNos={"imagem 1"} ImgDireita={"row"} texto={" A ACAPRA, atualmente denominada como Associação Brusquense de Proteção aos animais, foi fundada em Março de 1999, porém funcionava como uma filial da ACAPRA – Associação Catarinense de Proteção aos animais situada em Florianópolis. Esta filial foi fundada em média por treze voluntários, e presidida pela Sra. Dulcinea Coelho..."}/> */}
+            <div style={{ padding: "40px 20px", maxWidth: "1100px", margin: "0 auto" }}>
 
                  {/* Bloco 1 */}
-                <div style={{ display: "flex", gap: "30px", alignItems: "center", marginBottom: "40px" }}>
-                    <img src={ImgSobreNos1} alt="Imagem 1" style={{ width: "350px", borderRadius: "10px", boxShadow: "0 0 10px rgba(0,0,0,0.1)" }}
+                <div style={{ position: "relative", display: "flex", gap: "30px", alignItems: "center", marginBottom: "40px" }}>
+                    <img src={patinhas} alt="patinhas" style={{              
+                        position: "absolute",
+                        top: "40px",
+                        right: "30px",
+                        width: "200px",
+                        opacity: 0.7,
+                        zIndex: 0}}/>
+
+
+                    <img src={ImgSobreNos1} alt="Imagem 1" style={{ width: "450px", borderRadius: "10px", boxShadow: "0 0 10px rgba(0,0,0,0.1)" }}
                     />
-                    <p style={{ textAlign: "justify", lineHeight: "1.6", fontSize: "16px" }}>A ACAPRA, atualmente denominada como Associação Brusquense de Proteção aos animais,
+                    <p style={{ textAlign: "justify", lineHeight: "1.6", fontSize: "20px" }}>A ACAPRA, atualmente denominada como Associação Brusquense de Proteção aos animais,
                         foi fundada em Março de 1999, porém funcionava como uma filial da ACAPRA – Associação Catarinense
                         de Proteção aos animais situada em Florianópolis. Esta filial foi fundada em média por treze voluntários,
                         e presidida pela Sra. Dulcinea Coelho...</p>
                 </div>
 
                  {/* Bloco 2 */}
-                <div style={{ display: "flex", flexDirection: "row-reverse", gap: "30px", alignItems: "center", marginBottom: "40px" }}>
-                    <img src={imgSobreNos2} alt="Imagem 2" style={{ width: "350px", borderRadius: "10px", boxShadow: "0 0 10px rgba(0,0,0,0.1)" }}
+                <div style={{position: "relative", display: "flex", flexDirection: "row-reverse", gap: "30px", alignItems: "center", marginBottom: "40px" }}>
+                        <img src={patinhas} alt="patinhas" style={{              
+                        position: "absolute",
+                        top: "100px",
+                        right: "800px",
+                        width: "200px",
+                        opacity: 0.7,
+                        zIndex: 0}}/>
+
+                    <img src={imgSobreNos2} alt="Imagem 2" style={{ width: "450px", borderRadius: "10px", boxShadow: "0 0 10px rgba(0,0,0,0.1)" }}
                     />
-                    <p style={{ textAlign: "justify", lineHeight: "1.6", fontSize: "16px" }}>À medida que o tempo passava tiveram um aumento significativo de voluntários, 
+                    <p style={{ textAlign: "justify", lineHeight: "1.6", fontSize: "20px" }}>À medida que o tempo passava tiveram um aumento significativo de voluntários, 
                         porém o trabalho voluntariado não é tarefa fácil e por vezes os voluntários ausentavam-se, 
                         como é ainda hoje e dificultava o trabalho em um todo.
                         Por diversos momentos ocorreu a troca de integrantes da diretoria e estatutos 
@@ -41,9 +61,9 @@ export const SobreNos = () => {
 
                  {/* Bloco 3 */}
                 <div style={{ display: "flex", gap: "30px", alignItems: "center" }}>
-                    <img src={imgSobreNos3} alt="Imagem 3" style={{ width: "350px", borderRadius: "10px", boxShadow: "0 0 10px rgba(0,0,0,0.1)" }}
+                    <img src={imgSobreNos3} alt="Imagem 3" style={{ width: "450px", borderRadius: "10px", boxShadow: "0 0 10px rgba(0,0,0,0.1)" }}
                     />
-                    <p>Atualmente esta ONG conta com vinte voluntários e a diretoria é composta por Lílian Dressel na função de presidente, 
+                    <p style={{ textAlign: "justify", lineHeight: "1.6", fontSize: "20px" }}>Atualmente esta ONG conta com vinte voluntários e a diretoria é composta por Lílian Dressel na função de presidente, 
                         Lousiane Cunha como vice presidente, Maiara Becker como primeira tesoureira, Ana Ghislandi como segunda tesoureira, 
                         Roberta Kormann como primeira secretária, Cátia Pereira como segunda secretária, e Fernanda Belli Mafra, 
                         Neliza Becker e Thais Nunes Rosa como conselheiras fiscais.</p>
