@@ -14,7 +14,7 @@ export const SobreNos = () => {
 
         <div style={{ paddingTop: '70px' }} >
             <Navbar />
-                        <div Style={{ padding: "40px 20px", maxWidth: "1100px", margin: "0 auto" }}>
+                        <div style={{ padding: "40px 20px", maxWidth: "1100px", margin: "0 auto" }}>
 
                  {/* Bloco 1 */}
                 <div style={{ display: "flex", gap: "30px", alignItems: "center", marginBottom: "40px" }}>
