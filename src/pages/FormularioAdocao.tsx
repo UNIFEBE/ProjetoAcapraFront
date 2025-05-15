@@ -1,5 +1,5 @@
 import Navbar from '../componentes/Navbar/Navbar'
-import InputText from '../componentes/Inputs/inputText/InputText';
+import InputText from '../componentes/Inputs/InputText/InputText';
 import {
     Box,
     Button,

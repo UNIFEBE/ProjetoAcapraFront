@@ -1,5 +1,5 @@
 import { FormControl, InputLabel, OutlinedInput } from '@mui/material'
-import styles from "../inputText/InputText.module.css"
+import styles from "../InputText/InputText.module.css"
 
 interface InputTextProps {
 

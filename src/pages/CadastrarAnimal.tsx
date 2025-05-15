@@ -1,6 +1,6 @@
 import Navbar from "../componentes/Navbar/Navbar";
-import InputText from "../componentes/Inputs/inputText/InputText";
-import InputLongText from "../componentes/Inputs/inputText/InputLongText";
+import InputText from "../componentes/Inputs/InputText/InputText";
+import InputLongText from "../componentes/Inputs/InputText/InputLongText";
 import {
     Box,
     Button,
