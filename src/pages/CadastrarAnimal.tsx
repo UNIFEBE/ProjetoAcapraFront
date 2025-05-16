@@ -1,4 +1,5 @@
 import Navbar from "../componentes/Navbar/Navbar";
+import CustomFooter from "../componentes/Footer/Footer";
 import InputText from "../componentes/Inputs/InputText/InputText";
 import InputLongText from "../componentes/Inputs/InputText/InputLongText";
 import {
@@ -9,7 +10,6 @@ import {
     Typography
 } from '@mui/material';
 import { useState } from 'react';
-import {Pencil} from 'mdi-material-ui';
 
 export const CadastrarAnimal = () => {
     const [vacinado, setVacinado] = useState(false);
@@ -31,6 +31,7 @@ export const CadastrarAnimal = () => {
                     width: '90%',
                     marginTop: '3%',
                     boxShadow: 3
+                    
                 }}
                 
             >
@@ -96,6 +97,7 @@ export const CadastrarAnimal = () => {
                     </Box>
                 </Box>
             </Box>
+            <CustomFooter/>
         </div>
     );
 }
