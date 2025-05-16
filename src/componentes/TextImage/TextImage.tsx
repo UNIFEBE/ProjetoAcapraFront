@@ -6,15 +6,15 @@ interface TextImageProps {
     altSobreNos: string;
     children?: React.ReactNode;
     isDireita: boolean;
-    patinhaEsquerda?: 's' | 'n';
+    patinhaDireita?: 's' | 'n';
 
 }
 
-const TextImage: React.FC<TextImageProps> = ({ image, altImg, imgSobreNos, altSobreNos, children, isDireita, patinhaEsquerda }) => {
+const TextImage: React.FC<TextImageProps> = ({ image, altImg, imgSobreNos, altSobreNos, children, isDireita, patinhaDireita }) => {
 
     const ImgDireita = isDireita ? 'row-reverse' : 'row';
     let opacidadePatinha = 0.7;
-    const movePatinha = patinhaEsquerda==undefined ? opacidadePatinha = 0 : (patinhaEsquerda=='s' ? '30px': '800px');
+    const movePatinha = patinhaDireita==undefined ? opacidadePatinha = 0 : (patinhaDireita=='s' ? '30px': '800px');
 
     //'800px' : '30px';
     
