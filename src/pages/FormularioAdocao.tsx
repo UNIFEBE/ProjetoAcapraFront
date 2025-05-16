@@ -1,13 +1,19 @@
+import { useLocation } from 'react-router-dom';
+import CustomFooter from '../componentes/Footer/Footer';
 import Navbar from '../componentes/Navbar/Navbar'
 import InputText from '../componentes/Inputs/InputText/InputText';
 import {
     Box,
     Button,
 } from '@mui/material';
+import CardPet from '../componentes/CardPet/CardPet';
 export default function FormularioAdocao() {
 
+    const { state } = useLocation();
+    const { pet } = state || {};
+
     return (
-        <div style={{ paddingTop: '70px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', paddingTop: '70px'}}>
             <Navbar />
 
             <Box
@@ -22,7 +28,6 @@ export default function FormularioAdocao() {
                     marginTop: '3%',
                     boxShadow: 3
                 }}
-
             >
 
                 {/* Formulário */}
@@ -31,27 +36,27 @@ export default function FormularioAdocao() {
                     <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
 
                         <InputText htmlFor={"nome"} label={"Nome Completo"} id={"nome"} inputLabel={"Nome Completo"} tamanho={'48'} />
-                        <InputText htmlFor={"cpf"} label={"CPF"} id={"cpf"} inputLabel={"CPF"} tamanho={'48'}/>
+                        <InputText htmlFor={"cpf"} label={"CPF"} id={"cpf"} inputLabel={"CPF"} tamanho={'48'} />
 
                     </Box>
 
                     <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
 
-                        <InputText htmlFor={"email"} label={"E-mail"} id={"email"} inputLabel={"E-mail"} tamanho={'48'}/>
-                        <InputText htmlFor={"telefone"} label={"Telefone"} id={"telefone"} inputLabel={"Telefone"} tamanho={'48'}/>
+                        <InputText htmlFor={"email"} label={"E-mail"} id={"email"} inputLabel={"E-mail"} tamanho={'48'} />
+                        <InputText htmlFor={"telefone"} label={"Telefone"} id={"telefone"} inputLabel={"Telefone"} tamanho={'48'} />
 
                     </Box>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
 
-                        <InputText htmlFor={"cep"} label={"CEP"} id={"cep"} inputLabel={"CEP"} tamanho={'48'}/>
-                        <InputText htmlFor={"tipoResidencia"} label={"Tipo de Residência"} id={"tipoResidencia"} inputLabel={"Tipo de Residência"} tamanho={'48'}/>
+                        <InputText htmlFor={"cep"} label={"CEP"} id={"cep"} inputLabel={"CEP"} tamanho={'48'} />
+                        <InputText htmlFor={"tipoResidencia"} label={"Tipo de Residência"} id={"tipoResidencia"} inputLabel={"Tipo de Residência"} tamanho={'48'} />
 
                     </Box>
 
                     <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
 
-                        <InputText htmlFor={"dataNascimento"} label={"Data de Nascimento"} id={"dataNascimento"} inputLabel={"Data de Nascimento"} tamanho={'48'}/>
-                        <InputText htmlFor={"sexo"} label={"Sexo"} id={"sexo"} inputLabel={"Sexo"} tamanho={'48'}/>
+                        <InputText htmlFor={"dataNascimento"} label={"Data de Nascimento"} id={"dataNascimento"} inputLabel={"Data de Nascimento"} tamanho={'48'} />
+                        <InputText htmlFor={"sexo"} label={"Sexo"} id={"sexo"} inputLabel={"Sexo"} tamanho={'48'} />
 
                     </Box>
 
@@ -61,12 +66,15 @@ export default function FormularioAdocao() {
                 <Box>
                     <Box>
                         <Box display="flex" justifyContent="center" alignItems="center" height="50%">
-                            <img
-                                src="https://images.dog.ceo/breeds/retriever-golden/n02099601_3007.jpg"
-                                alt="Pet para adoção"
-                                style={{ width: '100%', borderRadius: 8 }}
-                            />
-
+                            <CardPet
+                            nome={pet.nome}
+                            raca={pet.raca}
+                            idade={pet.idade}
+                            cidade={pet.cidade}
+                            bairro={pet.bairro}
+                            imagem={pet.imagem}
+                            genero={pet.genero}
+                        />
                         </Box>
                         <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2, mt: 3 }}>
                             <Button variant="contained" sx={{ backgroundColor: '#f68b1f' }}>ADOTE-ME</Button>
@@ -74,6 +82,7 @@ export default function FormularioAdocao() {
                     </Box>
                 </Box>
             </Box>
+            <CustomFooter />
         </div>
     );
 }

@@ -27,7 +27,7 @@ function App() {
         <Route path="/recuperarSenha" element={<RecuperarSenha />} />
         <Route path="/redefinirSenha" element={<RedefinirSenha />} />
         <Route path="/formularioAdocao" element={<FormularioAdocao/>} />
-        <Route path="/CadastrarFormulario" element={<CadastrarFormulario/>} />
+        <Route path="/cadastrarFormulario" element={<CadastrarFormulario/>} />
 
         <Route path="*" element={<NotFound />} />
       </Routes>

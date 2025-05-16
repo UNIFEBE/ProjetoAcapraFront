@@ -1,3 +1,8 @@
+import { Box, Button, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, Paper, Typography, Link } from "@mui/material";
+import { useState } from "react";
+import AcapraLogo from '../assets/acapraLogo.png';
+import { Account, Eye, EyeOff, LockOutline } from "mdi-material-ui";
+
 const CadastroUsuario = () => {
   const [showPassword, setShowPassword] = useState(false);
 
