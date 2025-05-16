@@ -1,7 +1,8 @@
-import { Box, Button, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, Paper, Typography, Link } from "@mui/material";
+
+import { Button, FormControl, IconButton, InputAdornment, InputLabel, Link, OutlinedInput, Paper, Typography, Box } from "@mui/material";
+import { Account, Eye, EyeOff, LockOutline } from "mdi-material-ui";
 import { useState } from "react";
 import AcapraLogo from '../assets/acapraLogo.png';
-import { Account, Eye, EyeOff, LockOutline } from "mdi-material-ui";
 
 const CadastroUsuario = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -112,14 +113,14 @@ const CadastroUsuario = () => {
                 }
                 endAdornment={
                   <InputAdornment position="end">
-                    <IconButton
+                    {/* <IconButton
                       onClick={handleClickShowPassword}
                       onMouseDown={handleMouseDownPassword}
                       edge="end"
                       sx={{ color: '#54507E' }}
                     >
                       {showPassword ? <EyeOff /> : <Eye />}
-                    </IconButton>
+                    </IconButton> */}
                   </InputAdornment>
                 }
                 sx={outlinedInputStyles}
@@ -163,14 +164,14 @@ const CadastroUsuario = () => {
                 }
                 endAdornment={
                   <InputAdornment position="end">
-                    <IconButton
+                    {/* <IconButton
                       onClick={handleClickShowPassword}
                       onMouseDown={handleMouseDownPassword}
                       edge="end"
                       sx={{ color: '#54507E' }}
                     >
                       {showPassword ? <EyeOff /> : <Eye />}
-                    </IconButton>
+                    </IconButton> */}
                   </InputAdornment>
                 }
                 sx={outlinedInputStyles}

@@ -35,8 +35,7 @@ const TextImage: React.FC<TextImageProps> = ({ image, altImg, imgSobreNos, altSo
                     }} />
 
 
-                    <img src={imgSobreNos} alt={altSobreNos} style={{ width: "450px", borderRadius: "10px", boxShadow: "0 0 10px rgba(0,0,0,0.1)" }}
-                    />
+                    <img src={imgSobreNos} alt={altSobreNos} style={{ width: "450px", borderRadius: "10px", boxShadow: "0 0 10px rgba(0,0,0,0.1)" }}/>
                     <p style={{ textAlign: "justify", lineHeight: "1.6", fontSize: "20px" }}>{children}</p>
                 </div>
             </div>
