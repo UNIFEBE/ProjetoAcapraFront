@@ -34,11 +34,14 @@ const Navbar = () => {
             Cadastros
           </button>
           <div className={styles.dropdownContent}>
-            <Link to="/cadastrarUsuario" onClick={() => setMenuAberto(false)}>
-              Cadastrar Usuário
+            <Link to="/cadastrarVoluntario" onClick={() => setMenuAberto(false)}>
+              Cadastrar Voluntário
             </Link>
             <Link to="/cadastrarPet" onClick={() => setMenuAberto(false)}>
               Cadastrar Pet
+            </Link>
+            <Link to="/cadastrarFormulario" onClick={() => setMenuAberto(false)}>
+              Cadastrar Formulário
             </Link>
           </div>
         </div>

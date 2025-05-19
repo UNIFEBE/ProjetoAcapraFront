@@ -1,19 +1,18 @@
 import { useLocation } from 'react-router-dom';
 import CustomFooter from '../componentes/Footer/Footer';
 import Navbar from '../componentes/Navbar/Navbar'
-import InputText from '../componentes/Inputs/InputText/InputText';
-import {
-    Box,
-    Button,
-} from '@mui/material';
+import InputText from '../componentes/inputs/inputText/InputText';
+import { Box, Button } from '@mui/material';
 import CardPet from '../componentes/CardPet/CardPet';
+
+
 export default function FormularioAdocao() {
 
     const { state } = useLocation();
     const { pet } = state || {};
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', paddingTop: '70px'}}>
+        <div style={{ paddingTop: '70px', display: "flex", minHeight: '100vh', flexDirection: 'column'}}>
             <Navbar />
 
             <Box

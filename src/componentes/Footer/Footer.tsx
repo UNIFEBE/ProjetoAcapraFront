@@ -31,7 +31,7 @@ const CustomFooter: React.FC = () => {
      {/* Cada Box aqui vira uma coluna de informação */}
      <Box>
        <strong>📞 Telefone:</strong>
-       <p>(47) 9991-1652</p>
+       <p>(47) 99991-1652</p>
      </Box>
 
      <Box>
@@ -55,7 +55,7 @@ const CustomFooter: React.FC = () => {
        </p>
      </Box>
    </Box>
-   <p>© {new Date().getFullYear()} Meu Site. Todos os direitos reservados.</p>
+   <p>© {new Date().getFullYear()} ACAPRA. Todos os direitos reservados.</p>
   </footer>
 );
 };
