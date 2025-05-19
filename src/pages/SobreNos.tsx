@@ -13,14 +13,14 @@ export const SobreNos = () => {
         <div style={{ paddingTop: '70px'}} >
             <Navbar />
 
-            <TextImage altImg={patinhas} image={patinhas} imgSobreNos={imgSobreNos1} altSobreNos={"imagem 1"} isDireita={false} patinhaEsquerda={'s'}>
+            <TextImage altImg={patinhas} image={patinhas} imgSobreNos={imgSobreNos1} altSobreNos={"imagem 1"} isDireita={false} patinhaDireita={'s'}>
                 A ACAPRA, atualmente denominada como Associação Brusquense de Proteção aos animais,
                         foi fundada em Março de 1999, porém funcionava como uma filial da ACAPRA – Associação Catarinense
                         de Proteção aos animais situada em Florianópolis. Esta filial foi fundada em média por treze voluntários,
                         e presidida pela Sra. Dulcinea Coelho...
             </TextImage>
 
-            <TextImage altImg={patinhas} image={patinhas} imgSobreNos={imgSobreNos2} altSobreNos={"imagem 2"} isDireita={true} patinhaEsquerda={'n'}>
+            <TextImage altImg={patinhas} image={patinhas} imgSobreNos={imgSobreNos2} altSobreNos={"imagem 2"} isDireita={true} patinhaDireita={'n'}>
                 À medida que o tempo passava tiveram um aumento significativo de voluntários, 
                         porém o trabalho voluntariado não é tarefa fácil e por vezes os voluntários ausentavam-se, 
                         como é ainda hoje e dificultava o trabalho em um todo.
