@@ -12,9 +12,6 @@ const Navbar = () => {
     setMenuAberto(!menuAberto);
     setCadastrosOpen(false);
   };
-  const handleLogout = () => {
-    // lógica de logout
-  };
 
   return (
     <header className={styles.navbar}>
