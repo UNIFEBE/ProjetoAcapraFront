@@ -9,7 +9,7 @@ interface InputLongTextProps {
 
 }
 
-const InputLongText: React.FC<InputLongTextProps> = ({ htmlFor, label, id, inputLabel }) => {
+const InputLongText: React.FC<InputLongTextProps> = ({ htmlFor, label, id }) => {
 
     const inputStyle = {
         background: '#f4f1f7',
@@ -25,11 +25,6 @@ const InputLongText: React.FC<InputLongTextProps> = ({ htmlFor, label, id, input
             borderColor: '#54507E',
             borderWidth: 2,
         },
-    };
-
-    const inputBoxStyle = {
-        width: '48%',
-        marginBottom: 2
     };
 
     return (

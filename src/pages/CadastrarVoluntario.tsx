@@ -1,7 +1,7 @@
 import Navbar from "../componentes/Navbar/Navbar";
 import CustomFooter from "../componentes/Footer/Footer";
 import InputText from "../componentes/inputs/inputText/InputText";
-import InputLongText from "../componentes/inputs/inputText/InputLongText";
+
 import {
     Box,
     Button,
@@ -11,10 +11,9 @@ import {
 } from '@mui/material';
 import { useState } from 'react';
 
-export const CadastrarAnimal = () => {
+export const CadastrarVoluntario = () => {
     
-    const [vacinado, setVacinado] = useState(false);
-    const [castrado, setCastrado] = useState(false);
+    const [admin, setAdmin] = useState(false);
     const [imagemPet, setImagemPet] = useState<string | null>(null);
 
     const handleImagemChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,8 +49,9 @@ export const CadastrarAnimal = () => {
                 }}
 
             >
-                <InputText htmlFor="pesquisarPet" id="pesquisarPet" label="Pesquisar Pet" inputLabel="Pesquisar Pet" tamanho="100"/>
+                <InputText htmlFor="pesquisarVoluntario" id="pesquisarVoluntario" label="Pesquisar Voluntário" inputLabel="Pesquisar Voluntário" tamanho="100"/>
             </Box>
+
             <Box
                 sx={{
                     display: 'flex',
@@ -96,7 +96,7 @@ export const CadastrarAnimal = () => {
                             }}
                         />
                     ) : (
-                        <Typography variant="body1" align="center">Imagem do pet</Typography>
+                        <Typography variant="body1" align="center">Imagem de Perfil</Typography>
                     )}
 
                     <input
@@ -118,35 +118,22 @@ export const CadastrarAnimal = () => {
 
                     <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
 
-                        <InputText htmlFor={"animal"} label={"Nome do Pet"} id={"animal"} inputLabel={"Nome do Pet"} tamanho={'48'} />
-                        <InputText htmlFor={"sexo"} label={"Sexo"} id={"sexo"} inputLabel={"Sexo"} tamanho={'48'} />
+                        <InputText htmlFor={"nome"} label={"Nome"} id={"nome"} inputLabel={"Nome"} tamanho={'48'} />
+                        <InputText htmlFor={"email"} label={"E-mail"} id={"email"} inputLabel={"E-mail"} tamanho={'48'} />
 
                     </Box>
 
                     <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
 
-                        <InputText htmlFor={"raca"} label={"Raça"} id={"raca"} inputLabel={"Raça"} tamanho={'48'} />
-                        <InputText htmlFor={"nascimento"} label={"Data de Nascimento"} id={"nascimento"} inputLabel={"Data de Nascimento"} tamanho={'48'} />
+                        <InputText htmlFor={"senha"} label={"Senha"} id={"senha"} inputLabel={"Senha"} tamanho={'48'} />
+                        <InputText htmlFor={"confirmacaoSenha"} label={"Confirmação de Senha"} id={"confirmacaoSenha"} inputLabel={"Confirmação de Senha"} tamanho={'48'} />
 
                     </Box>
-
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-
-                        <InputText htmlFor={"pelagem"} label={"Pelagem"} id={"pelagem"} inputLabel={"Pelagem"} tamanho={'48'} />
-                        <InputText htmlFor={"responsavel"} label={"Nome do Responsável"} id={"responsavel"} inputLabel={"Nome do Responsável"} tamanho={'48'} />
-
-                    </Box>
-
-                    <InputLongText htmlFor={"descricao"} label={"Descrição"} id={"descricao"} inputLabel={"Descrição"} />
 
                     <Box sx={{ display: 'flex', justifyContent: 'end', mt: 2 }}>
                         <FormControlLabel
-                            control={<Switch checked={vacinado} onChange={() => setVacinado(!vacinado)} />}
-                            label="É Vacinado?"
-                        />
-                        <FormControlLabel
-                            control={<Switch checked={castrado} onChange={() => setCastrado(!castrado)} />}
-                            label="É Castrado?"
+                            control={<Switch checked={admin} onChange={() => setAdmin(!admin)} />}
+                            label="É Administrador?"
                         />
                     </Box>
 
@@ -162,4 +149,4 @@ export const CadastrarAnimal = () => {
     );
 }
 
-export default CadastrarAnimal;
+export default CadastrarVoluntario;

@@ -13,7 +13,7 @@ interface TextImageProps {
 const TextImage: React.FC<TextImageProps> = ({ image, altImg, imgSobreNos, altSobreNos, children, isDireita, patinhaDireita }) => {
 
     const ImgDireita = isDireita ? 'row-reverse' : 'row';
-    let opacidadePatinha = 0.7;
+    let opacidadePatinha = 0.3;
     const movePatinha = patinhaDireita==undefined ? opacidadePatinha = 0 : (patinhaDireita=='s' ? '30px': '800px');
 
     //'800px' : '30px';
