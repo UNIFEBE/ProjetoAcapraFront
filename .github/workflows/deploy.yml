@@ -13,7 +13,7 @@ jobs:
         uses: appleboy/ssh-action@v0.1.10
         with:
           host: 200.135.230.253
-          username: root
+          username: d309admin
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd /var/www/ProjetoAcapraFront
