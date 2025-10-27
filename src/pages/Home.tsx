@@ -2,6 +2,7 @@ import CardPet from "../componentes/CardPet/CardPet";
 import Navbar from "../componentes/Navbar/Navbar";
 import { Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import CustomFooter from "../componentes/Footer/Footer";
 
 const pets: {
     nome: string;
@@ -111,6 +112,7 @@ export const Home = () => {
                     </Box>
                 ))}
             </Box>
+            <CustomFooter/>
         </div>
     );
 };

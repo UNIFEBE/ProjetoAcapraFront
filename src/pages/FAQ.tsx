@@ -1,22 +1,16 @@
 import Navbar from "../componentes/Navbar/Navbar";
-import * as React from 'react';
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import Typography from '@mui/material/Typography';
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import { ChevronDown } from 'mdi-material-ui';
 import CustomAccordion from "../componentes/Accordion/Accordion";
+import CustomFooter from "../componentes/Footer/Footer";
+import { Box } from "@mui/material";
 
 
 
 export const FAQ = () => {
   return (
-    <div style={{ paddingTop: '70px', marginTop: '20px' }}>
-      <Navbar />
-      <div style={{ paddingInline: '10%', marginTop: '20px' }}>
 
+    <div style={{display: 'flex', flexDirection: 'column', minHeight: '100vh',paddingTop: '70px'}}>
+      <Navbar />
+      <Box component="main" sx={{ flex: 1, px: 2, py: 3 }}>
         <CustomAccordion titulo={"Quais serviços a ACAPRA oferece?"} >
           A ACAPRA realiza resgates de animais em situação de rua ou vítimas de maus-tratos,
           priorizando casos emergenciais. Contudo, devido a limitações de recursos e pessoal,
@@ -46,7 +40,8 @@ export const FAQ = () => {
           <br />
           E-mail: apedami@bol.com.br
         </CustomAccordion>
-      </div>
+      </Box>
+      <CustomFooter />
     </div>
   )
 }

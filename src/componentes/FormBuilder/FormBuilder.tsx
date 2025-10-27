@@ -1,100 +1,85 @@
-// FormBuilder.tsx
-import React, { useState } from "react";
-import { TextField, Button, Box, Typography, IconButton } from "@mui/material";
-import InputText from "../Inputs/InputText/InputText";
+import React, { useState } from 'react';
+import { Box, Button, Typography } from '@mui/material';
+import InputText from '../inputs/inputText/InputText';
 
 interface Question {
-    id: number;
-    text: string;
+  id: number;
+  text: string;
 }
 
 const FormBuilder: React.FC = () => {
-    // 1. Estado para o título do formulário
-    const [title, setTitle] = useState("");
+  // Estado para o título do formulário
+  const [title, setTitle] = useState('');
 
-    // 2. Estado para as perguntas, iniciando com uma pergunta vazia
-    const [questions, setQuestions] = useState<Question[]>([
-        { id: 1, text: "" },
-    ]);
+  // Estado para armazenar as perguntas
+  const [questions, setQuestions] = useState<Question[]>([]);
 
-    // 3. Handler para atualizar o título
-    const handleTitleChange = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-    ) => {
-        setTitle(e.target.value);
+  // Handler para atualizar o título
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.target.value);
+  };
+
+  // Adiciona uma nova pergunta vazia
+  const handleAddQuestion = () => {
+    const newQuestion: Question = {
+      id: Date.now(), // ID único
+      text: ''
     };
+    setQuestions([...questions, newQuestion]);
+  };
 
-    // 4. Handler para atualizar o texto de uma pergunta pelo seu id
-    const handleQuestionChange = (
-        id: number,
-        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-    ) => {
-        setQuestions((prev) =>
-            prev.map((q) =>
-                q.id === id
-                    ? { ...q, text: e.target.value } // só alteramos a pergunta certa
-                    : q
-            )
-        );
-    };
+  // Remove a última pergunta
+  const handleRemoveQuestion = () => {
+    setQuestions(prev => prev.slice(0, -1));
+  };
 
-    // 5. Adicionar nova pergunta com id único (incremental)
-    const addQuestion = () => {
-        const nextId = questions.length
-            ? Math.max(...questions.map((q) => q.id)) + 1
-            : 1;
-        setQuestions((prev) => [...prev, { id: nextId, text: "" }]);
-    };
-
-    // 6. (Opcional) Remover uma pergunta
-    const removeQuestion = (id: number) => {
-        setQuestions((prev) => prev.filter((q) => q.id !== id));
-    };
-
-    // 7. (Opcional) Função de “salvar” (por enquanto, apenas logar)
-    const handleSave = () => {
-        console.log({ title, questions });
-        alert("Veja o console com título e perguntas!");
-    };
-
-    return (
-        <Box sx={{ maxWidth: 600, mx: "auto", p: 2 }}>
-            <Typography variant="h5" gutterBottom>
-                Criar novo formulário
-            </Typography>
-
-            {/* Campo do título */}
-            <InputText htmlFor={"tituloForm"} id={"tituloForm"} inputLabel={"Título do Formulário"} label={"Título do Formulário"} tamanho={'100'}/>
-
-            {/* Campos de perguntas dinâmicas */}
-            {questions.map((q) => (
-                <Box
-                    key={q.id}
-                    sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 1, mt: 2 }}
-                >
-                    
-                    <InputText htmlFor={"pergunta"} id={"pergunta"} inputLabel={`Pergunta ${q.id}`} label={`Pergunta ${q.id}`} tamanho={'100'}/>
-                    {/* Botão para remover, se quiser */}
-                    {questions.length > 1 && (
-                        <IconButton
-                            aria-label="remover"
-                            onClick={() => removeQuestion(q.id)}
-                        >
-                            
-                        </IconButton>
-                    )}
-                </Box>
-            ))}
-
-            {/* Botão para adicionar nova pergunta */}
-            <Button onClick={() => removeQuestion(q.id)} variant="contained" color="warning">- Remover pergunta</Button>
-            <Button onClick={addQuestion} variant="contained" color="warning">+ Adicionar pergunta</Button>
-
-            {/* Botão para “salvar” */}
-            <Button
-                variant="contained" sx={{ backgroundColor: '#f68b1f' }} onClick={handleSave}>Salvar formulário</Button>
-        </Box>
+  // Atualiza o texto de uma pergunta específica
+  const handleQuestionChange = (id: number, text: string) => {
+    setQuestions(prev =>
+      prev.map(q => (q.id === id ? { ...q, text } : q))
     );
+  };
+
+  // Simula o salvamento
+  const handleSaveForm = () => {
+    console.log('Formulário salvo:', { title, questions });
+    alert('Formulário salvo no console!');
+  };
+
+  return (
+    <Box p={3}>
+      <Typography variant="h4" gutterBottom>Cadastrar Formulário TESTE SSH</Typography>
+
+      <InputText htmlFor='titulo' id='titulo' inputLabel={"Título do Formulário"} label={"Título do Formulário"} tamanho='100' valor={title} onChange={handleTitleChange}/>
+
+      {/* Renderiza cada pergunta */}
+      {questions.map((q, index) => (
+        
+        <InputText
+            chave={q.id}
+            label={`Pergunta ${index + 1}`}
+            inputLabel={`Pergunta ${index + 1}`}
+            id={'pergunta'}
+            htmlFor={'pergunta'}
+            tamanho='100'
+            valor={q.text}
+            onChange={(e) => handleQuestionChange(q.id, e.target.value)}
+        />
+
+      ))}
+
+      {/* Botões de ação */}
+      <Box mt={2} display="flex" gap={2}>
+        <Button variant="contained" onClick={handleAddQuestion}>Adicionar Pergunta</Button>
+        <Button variant="contained" sx={{background: '#FF0000'}} onClick={handleRemoveQuestion} disabled={questions.length === 0}>
+          Remover Pergunta
+        </Button>
+        <Button variant="contained" color="success" onClick={handleSaveForm}>
+          Salvar Formulário
+        </Button>
+      </Box>
+    </Box>
+  );
 };
 
 export default FormBuilder;

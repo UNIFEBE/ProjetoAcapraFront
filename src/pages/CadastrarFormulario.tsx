@@ -1,14 +1,12 @@
-import Navbar from '../componentes/Navbar/Navbar'
-import InputText from '../componentes/Inputs/InputText/InputText';
-import FormBuilder from '../componentes/FormBuilder/FormBuilder';
-import {
-    Box,
-    Button,
-} from '@mui/material';
-export default function FormularioAdocao() {
+import Navbar from "../componentes/Navbar/Navbar";
+import CustomFooter from "../componentes/Footer/Footer";
+import { Box } from '@mui/material';
+import FormBuilder from "../componentes/FormBuilder/FormBuilder";
+
+export const cadastrarFormulario = () => {
 
     return (
-        <div style={{ paddingTop: '70px' }}>
+        <div style={{ paddingTop: '70px', display: "flex", minHeight: '100vh', flexDirection: 'column'}}>
             <Navbar />
 
             <Box
@@ -23,16 +21,18 @@ export default function FormularioAdocao() {
                     marginTop: '3%',
                     boxShadow: 3
                 }}
-
             >
 
                 {/* Formulário */}
                 <Box sx={{ flex: 1, p: 5 }}>
-                
-                <FormBuilder/>
+                    
+                    <FormBuilder />
 
                 </Box>
             </Box>
+            <CustomFooter/>
         </div>
     );
 }
+
+export default cadastrarFormulario;

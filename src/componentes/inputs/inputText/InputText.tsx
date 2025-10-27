@@ -1,4 +1,5 @@
 import { FormControl, InputLabel, OutlinedInput } from '@mui/material'
+import React from 'react';
 
 interface InputTextProps {
 
@@ -6,11 +7,14 @@ interface InputTextProps {
     label: string;
     id: string;
     inputLabel: string;
-    tamanho: string
+    tamanho: string;
+    onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    valor?: string;
+    chave?: number;
 
 }
 
-const InputText: React.FC<InputTextProps> = ({ htmlFor, label, id, inputLabel, tamanho }) => {
+const InputText: React.FC<InputTextProps> = ({ htmlFor, label, id, inputLabel, tamanho, onChange, chave, valor }) => {
 
     const tamanhoPercent = tamanho+'%';
 
@@ -39,7 +43,7 @@ const InputText: React.FC<InputTextProps> = ({ htmlFor, label, id, inputLabel, t
         <>
             <FormControl sx={inputBoxStyle} variant="outlined" margin="dense">
                 <InputLabel htmlFor={htmlFor} sx={{ color: '#54507E' }}>{label}</InputLabel>
-                <OutlinedInput id={id} label={inputLabel} sx={inputStyle} required />
+                <OutlinedInput id={id} label={inputLabel} sx={inputStyle} onChange={onChange} key={chave} value={valor} required />
             </FormControl>
         </>
     )
