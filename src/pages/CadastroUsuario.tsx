@@ -1,23 +1,15 @@
-import {
-  FormControl,
-  InputAdornment,
-  InputLabel,
-  OutlinedInput,
-  Box,
-  Paper,
-  Typography,
-  Link,
-  Button,
-  IconButton
-} from '@mui/material';
-import { Account, Eye, EyeOff, LockOutline } from 'mdi-material-ui';
-import React, { useState } from 'react';
+
+import { Button, FormControl, InputAdornment, InputLabel, Link, OutlinedInput, Paper, Typography, Box, IconButton } from "@mui/material";
+import { Account, Eye, EyeOff, LockOutline } from "mdi-material-ui";
+import { useState } from "react";
 import AcapraLogo from '../assets/acapraLogo.png';
 
 const CadastroUsuario = () => {
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword1, setShowPassword1] = useState(false);
+  const [showPassword2, setShowPassword2] = useState(false);
 
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleClickShowPassword1 = () => setShowPassword1((show) => !show);
+  const handleClickShowPassword2 = () => setShowPassword2((show) => !show);
   const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => event.preventDefault();
 
   return (
@@ -33,7 +25,7 @@ const CadastroUsuario = () => {
         fontFamily: 'Poppins, sans-serif',
       }}
     >
-      {/* Blob SVG */}
+
       <Box
         component="svg"
         viewBox="0 0 200 200"
@@ -78,7 +70,6 @@ const CadastroUsuario = () => {
           Se ainda não tem uma conta, cadastre-se agora para começar essa jornada de amor e companheirismo!
         </Typography>
 
-        {/* Duas colunas usando Box */}
         <Box
           sx={{
             display: 'flex',
@@ -87,7 +78,6 @@ const CadastroUsuario = () => {
             justifyContent: 'space-between',
           }}
         >
-          {/* Coluna 1 */}
           <Box sx={{ flex: { xs: '1 1 100%', sm: '1 1 48%' } }}>
             <FormControl fullWidth variant="outlined" margin="dense">
               <InputLabel htmlFor="nome" sx={{ color: '#54507E' }}>
@@ -113,7 +103,7 @@ const CadastroUsuario = () => {
               </InputLabel>
               <OutlinedInput
                 id="password"
-                type={showPassword ? 'text' : 'password'}
+                type={showPassword1 ? 'text' : 'password'}
                 label="Senha"
                 required
                 startAdornment={
@@ -124,13 +114,13 @@ const CadastroUsuario = () => {
                 endAdornment={
                   <InputAdornment position="end">
                     <IconButton
-                      onClick={handleClickShowPassword}
+                      onClick={handleClickShowPassword1}
                       onMouseDown={handleMouseDownPassword}
                       edge="end"
                       sx={{ color: '#54507E' }}
                     >
-                      {showPassword ? <EyeOff /> : <Eye />}
-                    </IconButton>
+                      {showPassword1 ? <EyeOff /> : <Eye />}
+                    </IconButton> 
                   </InputAdornment>
                 }
                 sx={outlinedInputStyles}
@@ -164,7 +154,7 @@ const CadastroUsuario = () => {
               </InputLabel>
               <OutlinedInput
                 id="confirmpassword"
-                type={showPassword ? 'text' : 'password'}
+                type={showPassword2 ? 'text' : 'password'}
                 label="Confirme sua senha"
                 required
                 startAdornment={
@@ -175,12 +165,12 @@ const CadastroUsuario = () => {
                 endAdornment={
                   <InputAdornment position="end">
                     <IconButton
-                      onClick={handleClickShowPassword}
+                      onClick={handleClickShowPassword2}
                       onMouseDown={handleMouseDownPassword}
                       edge="end"
                       sx={{ color: '#54507E' }}
                     >
-                      {showPassword ? <EyeOff /> : <Eye />}
+                      {showPassword2 ? <EyeOff /> : <Eye />}
                     </IconButton>
                   </InputAdornment>
                 }

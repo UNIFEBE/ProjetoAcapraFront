@@ -1,211 +1,87 @@
-import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import CustomFooter from '../componentes/Footer/Footer';
 import Navbar from '../componentes/Navbar/Navbar'
 import InputText from '../componentes/inputs/inputText/InputText';
-import {
-    Box,
-    Paper,
-    Grid,
-    TextField,
-    Button,
-    Typography,
-    FormControl,
-    InputLabel,
-    Select,
-    MenuItem
-} from '@mui/material';
-import { Label } from 'mdi-material-ui';
+import { Box, Button } from '@mui/material';
+import CardPet from '../componentes/CardPet/CardPet';
 
-interface FormState {
-    nome: string;
-    telefone: string;
-    cep: string;
-    sexo: string;
-    cpf: string;
-    tipoResidencia: string;
-    dataNascimento: string;
-    email: string;
-}
 
 export default function FormularioAdocao() {
-    const [form, setForm] = useState<FormState>({
-        nome: '',
-        telefone: '',
-        cep: '',
-        sexo: '',
-        cpf: '',
-        tipoResidencia: '',
-        dataNascimento: '',
-        email: ''
-    });
 
-    const handleChange = (e: any) => {
-        setForm({ ...form, [e.target.name]: e.target.value });
-    };
-
-    const handleSubmit = (e: any) => {
-        e.preventDefault();
-        console.log('Enviando formulário:', form);
-    };
+    const { state } = useLocation();
+    const { pet } = state || {};
 
     return (
-        <div style={{ paddingTop: 70 }}>
+        <div style={{ paddingTop: '70px', display: "flex", minHeight: '100vh', flexDirection: 'column'}}>
             <Navbar />
 
-            <Box display="flex" justifyContent="center">
-                <Paper
-                    elevation={3}
-                    sx={{
-                        width: '90%',
-                        maxWidth: '1200px',
-                        bgcolor: '#F5F5F5',
-                        borderRadius: 2,
-                        p: 4
-                    }}
-                >
-                    <Typography variant="h4" align="center" gutterBottom>
-                        Formulário de Adoção
-                    </Typography>
+            <Box
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    padding: 4,
+                    backgroundColor: '#fff',
+                    borderRadius: 4,
+                    margin: 'auto',
+                    width: '90%',
+                    marginTop: '3%',
+                    boxShadow: 3
+                }}
+            >
 
-                    <form onSubmit={handleSubmit}>
-                        <Grid
-                            container
-                            spacing={2}
-                            justifyContent="space-between"
-                            alignItems="center"
-                            sx={{ mb: 2 }}
-                        >
+                {/* Formulário */}
+                <Box sx={{ flex: 1, p: 5 }}>
 
-                            <Grid>
-                                <Grid
-                                    container
-                                    spacing={2}
-                                    justifyContent="space-between"
-                                    alignItems="center"
-                                >
-                                    <Grid sx={{ p: 2 }}>
-                                        <InputText titulo={"Nome Completo"} nome={"nome"} valor={form.nome}/>
-                                    </Grid>
-                                    <Grid sx={{ p: 2 }}>
-                                        <InputText titulo={"CPF"} nome={"cpf"} valor={form.cpf}/>
-                                    </Grid>
-                                </Grid>
-                                <Grid
-                                    container
-                                    spacing={2}
-                                    justifyContent="space-between"
-                                    alignItems="center"
-                                >
-                                    <Grid sx={{ p: 2 }}>
-                                        <TextField
-                                            fullWidth
-                                            label="E-mail"
-                                            name="email"
-                                            value={form.email}
-                                            onChange={handleChange}
-                                            variant="outlined"
-                                            required
-                                        />
-                                    </Grid>
-                                    <Grid sx={{ p: 2 }}>
-                                        <TextField
-                                            fullWidth
-                                            label="Telefone"
-                                            name="telefone"
-                                            value={form.telefone}
-                                            onChange={handleChange}
-                                            variant="outlined"
-                                            required
-                                        />
-                                    </Grid>
-                                </Grid>
-                                <Grid
-                                    container
-                                    spacing={2}
-                                    justifyContent="space-between"
-                                    alignItems="center"
-                                >
-                                    <Grid sx={{ p: 2 }}>
-                                        <TextField
-                                            fullWidth
-                                            label="CEP"
-                                            name="cep"
-                                            value={form.cep}
-                                            onChange={handleChange}
-                                            variant="outlined"
-                                        />
-                                    </Grid>
-                                    <Grid sx={{ p: 2 }}>
-                                        <TextField
-                                            fullWidth
-                                            label="Tipo de Residência"
-                                            name="tipoResidencia"
-                                            value={form.tipoResidencia}
-                                            onChange={handleChange}
-                                            variant="outlined"
-                                        />
-                                    </Grid>
-                                </Grid>
-                                <Grid
-                                    container
-                                    spacing={2}
-                                    justifyContent="space-between"
-                                    alignItems="center"
-                                >
-                                    <Grid sx={{ p: 2 }}>
-                                        <TextField
-                                            fullWidth
-                                            label="Data de Nascimento"
-                                            name="dataNascimento"
-                                            value={form.dataNascimento}
-                                            onChange={handleChange}
-                                            variant="outlined"
-                                        />
-                                    </Grid>
-                                    <Grid sx={{ p: 2 }}>
-                                        <TextField
-                                            fullWidth
-                                            label="Sexo"
-                                            name="sexo"
-                                            value={form.sexo}
-                                            onChange={handleChange}
-                                            variant="outlined"
-                                        />
-                                    </Grid>
-                                </Grid>
-                            </Grid>
-                            <Grid>
-                                <Grid>
-                                    <Box display="flex" justifyContent="center" alignItems="center" height="100%">
-                                        <img
-                                            src="https://images.dog.ceo/breeds/retriever-golden/n02099601_3007.jpg"
-                                            alt="Pet para adoção"
-                                            style={{ width: '100%', borderRadius: 8 }}
-                                        />
-                                    </Box>
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                        <Grid>
-                            <Box textAlign="center" mt={2}>
-                                <Button
-                                    type="submit"
-                                    variant="contained"
-                                    sx={{
-                                        backgroundColor: '#FF8C00',
-                                        color: '#FFF',
-                                        px: 4,
-                                        py: 1,
-                                        borderRadius: 2,
-                                        textTransform: 'none'
-                                    }}
-                                >
-                                    ADOTE-ME
-                                </Button>
-                            </Box>
-                        </Grid>
-                    </form>
-                </Paper>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+
+                        <InputText htmlFor={"nome"} label={"Nome Completo"} id={"nome"} inputLabel={"Nome Completo"} tamanho={'48'} />
+                        <InputText htmlFor={"cpf"} label={"CPF"} id={"cpf"} inputLabel={"CPF"} tamanho={'48'} />
+
+                    </Box>
+
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+
+                        <InputText htmlFor={"email"} label={"E-mail"} id={"email"} inputLabel={"E-mail"} tamanho={'48'} />
+                        <InputText htmlFor={"telefone"} label={"Telefone"} id={"telefone"} inputLabel={"Telefone"} tamanho={'48'} />
+
+                    </Box>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+
+                        <InputText htmlFor={"cep"} label={"CEP"} id={"cep"} inputLabel={"CEP"} tamanho={'48'} />
+                        <InputText htmlFor={"tipoResidencia"} label={"Tipo de Residência"} id={"tipoResidencia"} inputLabel={"Tipo de Residência"} tamanho={'48'} />
+
+                    </Box>
+
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+
+                        <InputText htmlFor={"dataNascimento"} label={"Data de Nascimento"} id={"dataNascimento"} inputLabel={"Data de Nascimento"} tamanho={'48'} />
+                        <InputText htmlFor={"sexo"} label={"Sexo"} id={"sexo"} inputLabel={"Sexo"} tamanho={'48'} />
+
+                    </Box>
+
+
+                </Box>
+                {/* Imagem do Pet */}
+                <Box>
+                    <Box>
+                        <Box display="flex" justifyContent="center" alignItems="center" height="50%">
+                            <CardPet
+                            nome={pet.nome}
+                            raca={pet.raca}
+                            idade={pet.idade}
+                            cidade={pet.cidade}
+                            bairro={pet.bairro}
+                            imagem={pet.imagem}
+                            genero={pet.genero}
+                        />
+                        </Box>
+                        <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2, mt: 3 }}>
+                            <Button variant="contained" sx={{ backgroundColor: '#f68b1f' }}>ADOTE-ME</Button>
+                        </Box>
+                    </Box>
+                </Box>
             </Box>
+            <CustomFooter />
         </div>
     );
 }

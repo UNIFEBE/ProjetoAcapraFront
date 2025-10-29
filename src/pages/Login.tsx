@@ -199,7 +199,9 @@ const Login = () => {
                 {/* Cadastro */}
                 <Typography variant="body2" sx={{ mt: 6, color: '#ada5b4' }}>
                     Ainda não tem uma conta?{' '}
-                    <Link href="/cadastro" underline="hover" sx={{ color: '#54507E' }}>
+
+                    <Link href="/cadastrarUsuario" underline="hover" sx={{ color: '#54507E' }}>
+
                         Cadastre-se!
                     </Link>
                 </Typography>

@@ -19,6 +19,7 @@ import { useState } from "react";
 import axios from "axios";
 
 export const CadastrarAnimal = () => {
+
     const [vacinado, setVacinado] = useState(false);
     const [castrado, setCastrado] = useState(false);
     const [imagem, setImagem] = useState<File | null>(null);
@@ -160,6 +161,7 @@ export const CadastrarAnimal = () => {
                     width: "90%",
                     marginTop: "3%",
                     boxShadow: 3
+
                 }}
             >
                 {/* Imagem */}
