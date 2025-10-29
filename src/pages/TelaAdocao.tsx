@@ -10,6 +10,11 @@ const TelaAdocao = () => {
 
     if (!pet) return <Typography variant="h5">Pet não encontrado</Typography>;
 
+    // Caso a imagem venha sem prefixo, adiciona automaticamente
+    const imagemPet = pet.imagem?.startsWith("data:image")
+        ? pet.imagem
+        : `data:image/jpeg;base64,${pet.imagem}`;
+
     return (
         <Box padding={2}>
             <Navbar />
@@ -22,6 +27,7 @@ const TelaAdocao = () => {
                     marginTop: '100px',
                 }}
             >
+                {/* Imagem do pet */}
                 <Box
                     sx={{
                         width: { xs: '100%', md: '30%' },
@@ -40,7 +46,7 @@ const TelaAdocao = () => {
                         }}
                     >
                         <img
-                            src={pet.imagem}
+                            src={imagemPet}
                             alt={pet.nome}
                             style={{
                                 width: '100%',
@@ -52,6 +58,7 @@ const TelaAdocao = () => {
                     </Box>
                 </Box>
 
+                {/* Informações do pet */}
                 <Box sx={{ flexGrow: 1 }}>
                     <Typography variant="h3" color="#FFA726" fontWeight="bold" gutterBottom>
                         {pet.nome}
@@ -67,7 +74,7 @@ const TelaAdocao = () => {
                     />
 
                     <Typography variant="h6" color="#FFA726" gutterBottom>
-                        {pet.raca}
+                        {pet.raca} • {pet.pelagem}
                     </Typography>
 
                     <Box mt={2}>
@@ -75,10 +82,8 @@ const TelaAdocao = () => {
                         <Box display="flex" alignItems="center" mb={1}>
                             <MapMarker sx={{ color: 'orange', mr: 1 }} />
                             <Typography>
-                                Rua das Flores, 123, Ap 401<br />
-                                {pet.bairro}<br />
-                                88000-000<br />
-                                {pet.cidade}/SC
+                                {pet.bairro || 'Bairro não informado'}<br />
+                                {pet.cidade || 'Cidade não informada'}/SC
                             </Typography>
                         </Box>
                     </Box>
@@ -93,11 +98,16 @@ const TelaAdocao = () => {
                         }}
                     >
                         <CardInfoPet titulo="Idade:" valor={pet.idade} tipo="idade" />
-                        <CardInfoPet titulo="Sexo:" valor={pet.genero === 'macho' ? 'Macho' : 'Fêmea'} tipo={pet.genero === 'macho' ? 'sexoM' : 'sexoF'} />
-                        <CardInfoPet titulo="Castrado:" valor="Sim" tipo="castrado" />
-                        <CardInfoPet titulo="Vacinado:" valor="Não" tipo="vacinado" />
+                        <CardInfoPet
+                            titulo="Sexo:"
+                            valor={pet.genero === 'macho' ? 'Macho' : 'Fêmea'}
+                            tipo={pet.genero === 'macho' ? 'sexoM' : 'sexoF'}
+                        />
+                        <CardInfoPet titulo="Castrado:" valor={pet.castrado ? 'Sim' : 'Não'} tipo="castrado" />
+                        <CardInfoPet titulo="Vacinado:" valor={pet.vacinado ? 'Sim' : 'Não'} tipo="vacinado" />
                     </Box>
 
+                    {/* Descrição do pet */}
                     <Paper
                         elevation={3}
                         sx={{
@@ -109,9 +119,9 @@ const TelaAdocao = () => {
                             textAlign: 'justify',
                         }}
                     >
-                        {pet.nome} é um verdadeiro raio de sol! Com sua pelagem dourada e olhar meigo, ele é a definição de lealdade e carinho.
-                        Este adorável {pet.raca} tem uma personalidade encantadora, sendo sempre amigável, brincalhão e cheio de energia.
-                        Adora passar tempo com sua família humana, seja se divertindo em uma caminhada no parque ou recebendo carinho.
+                        {pet.descricao
+                            ? pet.descricao
+                            : `${pet.nome} é um animal encantador e está esperando um novo lar cheio de amor!`}
                     </Paper>
 
                     <Box mt={3}>

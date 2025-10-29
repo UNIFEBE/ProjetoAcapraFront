@@ -21,6 +21,7 @@ const Login = () => {
     const handleClickShowPassword = () => setShowPassword((show) => !show);
     const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => event.preventDefault();
 
+
     return (
         <Box
             sx={{
@@ -180,7 +181,9 @@ const Login = () => {
                             backgroundColor: '#3f3b65',
                         },
                     }}
-                href='/'>
+                    href='/'
+                // onClick={handleLogin}
+                >
                     Entrar
                 </Button>
 

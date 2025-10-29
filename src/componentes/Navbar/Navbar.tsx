@@ -8,6 +8,10 @@ const Navbar = () => {
   const [menuAberto, setMenuAberto] = useState(false);
   const [cadastrosOpen, setCadastrosOpen] = useState(false);
 
+  const token = localStorage.getItem('token');
+  const dadosToken = token ? JSON.parse(atob(token.split('.')[1])) : null;
+  const roleUser = dadosToken.Role;
+
   const toggleMenu = () => {
     setMenuAberto(!menuAberto);
     setCadastrosOpen(false);
@@ -34,12 +38,14 @@ const Navbar = () => {
             Cadastros
           </button>
           <div className={styles.dropdownContent}>
-            <Link to="/cadastrarUsuario" onClick={() => setMenuAberto(false)}>
+            {/* <Link to="/cadastrarUsuario" onClick={() => setMenuAberto(false)}>
               Cadastrar Usuário
-            </Link>
-            <Link to="/cadastrarPet" onClick={() => setMenuAberto(false)}>
-              Cadastrar Pet
-            </Link>
+            </Link> */}
+            {(roleUser === 'ADMIN' || roleUser === 'VOLUNTARIO') && (
+              <Link to="/cadastrarPet" onClick={() => setMenuAberto(false)}>
+                Cadastrar Pet
+              </Link>
+            )}
             <Link to="/formularioAdocao" onClick={() => setMenuAberto(false)}>
               Cadastrar Formulário
             </Link>
@@ -52,8 +58,8 @@ const Navbar = () => {
       <div className={styles.userInfo}>
         <img src={UserPhoto} alt="Usuário" className={styles.userIcon} />
         <div className={styles.userDropdown}>
-          <Link to="/perfil">Perfil</Link>
-          <Link to="/configuracoes">Configurações</Link>
+          {/* <Link to="/perfil">Perfil</Link>
+          <Link to="/configuracoes">Configurações</Link> */}
           <Link to="/login">Desconectar</Link>
         </div>
       </div>
