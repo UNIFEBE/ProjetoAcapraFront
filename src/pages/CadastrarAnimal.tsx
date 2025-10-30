@@ -37,7 +37,6 @@ export const CadastrarAnimal = () => {
 
     const [errors, setErrors] = useState<Record<string, boolean>>({});
 
-    // Estado do Snackbar
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState("");
     const [snackbarSeverity, setSnackbarSeverity] = useState<
@@ -357,7 +356,6 @@ export const CadastrarAnimal = () => {
                 </Box>
             </Box>
 
-            {/* Snackbar de feedback */}
             <Snackbar
                 open={snackbarOpen}
                 autoHideDuration={3000}

@@ -13,6 +13,8 @@ import RecuperarSenha from './pages/RecuperarSenha';
 import RedefinirSenha from './pages/RedefinirSenha';
 import FormularioAdocao from './pages/FormularioAdocao';
 import CadastrarVoluntario from './pages/CadastrarVoluntario';
+import PerfilUsuario from './pages/PerfilUsuario';
+import Formulario from './pages/Formulario';
 
 function App() {
   return (
@@ -27,9 +29,11 @@ function App() {
         <Route path="/adocao" element={<TelaAdocao />} />
         <Route path="/recuperarSenha" element={<RecuperarSenha />} />
         <Route path="/redefinirSenha" element={<RedefinirSenha />} />
-        <Route path="/formularioAdocao" element={<FormularioAdocao/>} />
-        <Route path="/cadastrarFormulario" element={<CadastrarFormulario/>} />
-        <Route path="/cadastrarVoluntario" element={<CadastrarVoluntario/>} />
+        <Route path="/formularioAdocao" element={<FormularioAdocao />} />
+        <Route path="/cadastrarFormulario" element={<CadastrarFormulario />} />
+        <Route path="/cadastrarVoluntario" element={<CadastrarVoluntario />} />
+        <Route path="/perfil" element={<PerfilUsuario />} />
+        <Route path="/formulario" element={<Formulario />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>

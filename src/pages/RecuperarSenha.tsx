@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import {
     Box,
     Button,
@@ -10,27 +11,65 @@ import {
     Link
 } from '@mui/material';
 import { Account } from 'mdi-material-ui';
-import { useEffect, useState } from 'react';
+import emailjs from '@emailjs/browser';
 import AlertEmail from "../componentes/Alerts/AlertEmail";
 import AcapraLogo from '../assets/acapraLogo.png';
 
 const RecuperarSenha = () => {
-
+    const [email, setEmail] = useState('');
     const [mensagemEnviada, setMensagemEnviada] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [erro, setErro] = useState('');
 
-    const verificaEmail = () =>{
-        setMensagemEnviada(true);
-    }
+    const SERVICE_ID = 'service_89bkqfa';
+    const TEMPLATE_ID = 'template_gl039ud';
+    const PUBLIC_KEY = 'augjtOFxEwjqjwRcX';
 
     useEffect(() => {
-    if (!mensagemEnviada) return;
+        if (!mensagemEnviada) return;
+        const timer = setTimeout(() => setMensagemEnviada(false), 5000);
+        return () => clearTimeout(timer);
+    }, [mensagemEnviada]);
 
-    const timer = setTimeout(() => {
-      setMensagemEnviada(false);
-    }, 5000);
+    // Validação de e-mail
+    const validarEmail = (e: string) => {
+        const re = /\S+@\S+\.\S+/;
+        return re.test(e);
+    };
 
-    return () => clearTimeout(timer);
-  }, [mensagemEnviada]);
+    const enviarEmail = async () => {
+        setErro('');
+
+        if (!validarEmail(email)) {
+            setErro('Por favor insira um e-mail válido.');
+            return;
+        }
+
+        setLoading(true);
+
+        try {
+            let agora = new Date()
+            agora.setHours(agora.getHours() + 1);
+            const textoToken = agora.toISOString() + 'acapraApi'
+            const token = btoa(textoToken);
+            const resetLink = `http://localhost:5173/redefinirSenha?token=${token}`;
+
+            const templateParams = {
+                to_email: email,
+                reset_link: resetLink,
+            };
+
+            await emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams, PUBLIC_KEY);
+
+            setMensagemEnviada(true);
+            setEmail('');
+        } catch (err) {
+            console.error('Erro ao enviar e-mail:', err);
+            setErro('Ocorreu um erro ao enviar o e-mail. Tente novamente mais tarde.');
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <Box
@@ -98,43 +137,44 @@ const RecuperarSenha = () => {
                     Enviaremos um e-mail com um link para a recuperação de sua senha
                 </Typography>
 
-                {/* Campo de Senha Nova */}
                 <FormControl fullWidth variant="outlined" margin="dense">
-                                    <InputLabel htmlFor="emailRecuperacao" sx={{ color: '#54507E' }}>
-                                        E-mail de Recuperação
-                                    </InputLabel>
-                                    <OutlinedInput
-                                        id="emailRecuperacao"
-                                        type="email"
-                                        label="E-mail de Recuperação"
-                                        required
-                                        startAdornment={
-                                            <InputAdornment position="start">
-                                                <Account sx={{ color: '#54507E' }} />
-                                            </InputAdornment>
-                                        }
-                                        sx={{
-                                            background: '#f4f1f7',
-                                            borderRadius: 2,
-                                            fontSize: 15,
-                                            '& .MuiOutlinedInput-notchedOutline': {
-                                                borderColor: 'transparent',
-                                            },
-                                            '&:hover .MuiOutlinedInput-notchedOutline': {
-                                                borderColor: '#bdbdbd',
-                                            },
-                                            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                                                borderColor: '#54507E',
-                                                borderWidth: 2,
-                                            },
-                                        }}
-                                    />
-                                </FormControl>
+                    <InputLabel htmlFor="emailRecuperacao" sx={{ color: '#54507E' }}>
+                        E-mail de Recuperação
+                    </InputLabel>
+                    <OutlinedInput
+                        id="emailRecuperacao"
+                        type="email"
+                        label="E-mail de Recuperação"
+                        required
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        startAdornment={
+                            <InputAdornment position="start">
+                                <Account sx={{ color: '#54507E' }} />
+                            </InputAdornment>
+                        }
+                        sx={{
+                            background: '#f4f1f7',
+                            borderRadius: 2,
+                            fontSize: 15,
+                            '& .MuiOutlinedInput-notchedOutline': {
+                                borderColor: 'transparent',
+                            },
+                            '&:hover .MuiOutlinedInput-notchedOutline': {
+                                borderColor: '#bdbdbd',
+                            },
+                            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                borderColor: '#54507E',
+                                borderWidth: 2,
+                            },
+                        }}
+                        onKeyDown={(e) => { if (e.key === 'Enter') enviarEmail(); }}
+                    />
+                </FormControl>
 
-                {/* Botão Entrar */}
                 <Button
-                    onClick={verificaEmail}
-                    disabled={mensagemEnviada}
+                    onClick={enviarEmail}
+                    disabled={loading || mensagemEnviada}
                     fullWidth
                     variant="contained"
                     sx={{
@@ -149,16 +189,21 @@ const RecuperarSenha = () => {
                         },
                     }}
                 >
-                    {mensagemEnviada ? 'Enviado!' : 'Enviar e-mail'}
+                    {loading ? 'Enviando...' : mensagemEnviada ? 'Enviado!' : 'Enviar e-mail'}
                 </Button>
 
                 {mensagemEnviada && (
                     <AlertEmail>
-                    Um email foi enviado com um link para a redefinição de sua senha
+                        Um email foi enviado com um link para a redefinição de sua senha
                     </AlertEmail>
                 )}
 
-                {/* Fazer Login */}
+                {erro && (
+                    <Box sx={{ mt: 2, color: 'red', fontSize: 14 }}>
+                        {erro}
+                    </Box>
+                )}
+
                 <Link
                     href="/login"
                     underline="hover"
@@ -167,7 +212,6 @@ const RecuperarSenha = () => {
                     Faça Login Já!
                 </Link>
 
-                {/* Cadastro */}
                 <Typography variant="body2" sx={{ mt: 6, color: '#ada5b4' }}>
                     Ainda não tem uma conta?{' '}
                     <Link href="#" underline="hover" sx={{ color: '#54507E' }}>

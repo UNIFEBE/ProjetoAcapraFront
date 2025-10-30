@@ -56,8 +56,8 @@ const Navbar = () => {
       <div className={styles.userInfo}>
         <img src={UserPhoto} alt="Usuário" className={styles.userIcon} />
         <div className={styles.userDropdown}>
-          {/* <Link to="/perfil">Perfil</Link>
-          <Link to="/configuracoes">Configurações</Link> */}
+          <Link to="/perfil">Perfil</Link>
+          {/*<Link to="/configuracoes">Configurações</Link> */}
           <Link to="/login">Desconectar</Link>
         </div>
       </div>

@@ -8,17 +8,121 @@ import {
     IconButton,
     FormControl,
     Paper,
-    Link
+    CircularProgress,
+    Alert,
 } from '@mui/material';
 import { Eye, EyeOff, LockOutline } from 'mdi-material-ui';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import AcapraLogo from '../assets/acapraLogo.png';
+import axios from 'axios';
 
-const RecuperarSenha = () => {
-    const [showPassword, setShowPassword] = useState(false);
+const RedefinirSenha = () => {
+    const [showNovaSenha, setShowNovaSenha] = useState(false);
+    const [showConfirmaSenha, setShowConfirmaSenha] = useState(false);
 
-    const handleClickShowPassword = () => setShowPassword((show) => !show);
-    const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => event.preventDefault();
+    const [token, setToken] = useState<string | null>(null);
+    const [novaSenha, setNovaSenha] = useState('');
+    const [confirmaSenha, setConfirmaSenha] = useState('');
+    const [loading, setLoading] = useState(true);
+    const [tokenValido, setTokenValido] = useState(false);
+    const [mensagem, setMensagem] = useState<string | null>(null);
+    const [erro, setErro] = useState<string | null>(null);
+
+    const [searchParams] = useSearchParams();
+    const navigate = useNavigate();
+
+    function decodeTokenBase64(tokenBase64: string): Date | null {
+        try {
+            const decoded = decodeURIComponent(escape(window.atob(tokenBase64)));
+
+            // Verifica se contém a substring esperada
+            if (!decoded.includes('acapraApi')) {
+                console.warn('Token inválido: não contém "acapraApi".');
+                return null;
+            }
+
+            const dataString = decoded.replace('acapraApi', '');
+            const data = new Date(dataString);
+
+            if (isNaN(data.getTime())) {
+                console.warn('Token inválido: data inválida.');
+                return null;
+            }
+
+            return data;
+        } catch (err) {
+            console.error('Erro ao decodificar token:', err);
+            return null; // Token malformado ou incompleto
+        }
+    }
+
+    function tokenAindaValido(tokenBase64: string): boolean {
+        const dataExpiracao = decodeTokenBase64(tokenBase64);
+        if (!dataExpiracao) return false;
+        const agora = new Date();
+        return agora <= dataExpiracao;
+    }
+
+    // 🔹 Captura o token e valida
+    useEffect(() => {
+        const tokenParam = searchParams.get('token');
+        setToken(tokenParam);
+
+        if (!tokenParam) {
+            setErro('Token ausente ou inválido.');
+            setLoading(false);
+            setTimeout(() => navigate('/login', { replace: true }), 2000);
+            return;
+        }
+
+        const valido = tokenAindaValido(tokenParam);
+
+        setTimeout(() => {
+            if (valido) {
+                setTokenValido(true);
+            } else {
+                setErro('Token expirado. Solicite uma nova redefinição de senha.');
+                setTimeout(() => navigate('/login', { replace: true }), 2000);
+            }
+            setLoading(false);
+        }, 800);
+    }, []);
+
+    // 🔹 Envio da nova senha
+    const handleAlterarSenha = async () => {
+        setErro(null);
+        setMensagem(null);
+
+        if (novaSenha !== confirmaSenha) {
+            setErro('As senhas não coincidem.');
+            return;
+        }
+
+        if (!token) {
+            setErro('Token ausente.');
+            return;
+        }
+
+        try {
+            setLoading(true);
+            // Exemplo real:
+            // await axios.post('https://api.acapra.com.br/auth/redefinir-senha', {
+            //   token,
+            //   novaSenha,
+            // });
+
+            // Simulação
+            await new Promise((resolve) => setTimeout(resolve, 1500));
+            setMensagem('Senha alterada com sucesso! Você já pode fazer login.');
+            setTimeout(() => navigate('/login', { replace: true }), 2000);
+        } catch (err) {
+            console.error(err);
+            setErro('Erro ao alterar a senha. Tente novamente.');
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <Box
@@ -33,7 +137,6 @@ const RecuperarSenha = () => {
                 fontFamily: 'Poppins, sans-serif',
             }}
         >
-            {/* Blob SVG */}
             <Box
                 component="svg"
                 viewBox="0 0 200 200"
@@ -55,7 +158,6 @@ const RecuperarSenha = () => {
                 />
             </Box>
 
-            {/* Card de Login */}
             <Paper
                 elevation={6}
                 sx={{
@@ -72,148 +174,141 @@ const RecuperarSenha = () => {
                     backgroundColor: '#fff',
                 }}
             >
-                <Box
-                    component="img"
-                    src={AcapraLogo}
-                    alt="logo acapra"
-                    sx={{ width: 96, marginBottom: 4 }}
-                />
+                <Box component="img" src={AcapraLogo} alt="logo acapra" sx={{ width: 96, mb: 4 }} />
 
-                <Typography variant="h6" sx={{ fontWeight: 500, mb: 0.5 }}>
-                    Alteração de Senha
-                </Typography>
-                <Typography variant="body2" sx={{ color: '#ada5b4', mb: 4 }}>
-                    Insira a sua nova senha abaixo
-                </Typography>
+                {loading ? (
+                    <CircularProgress sx={{ color: '#54507E' }} />
+                ) : erro ? (
+                    <Alert severity="error" sx={{ mb: 2 }}>
+                        {erro}
+                    </Alert>
+                ) : mensagem ? (
+                    <Alert severity="success" sx={{ mb: 2 }}>
+                        {mensagem}
+                    </Alert>
+                ) : tokenValido ? (
+                    <>
+                        <Typography variant="h6" sx={{ fontWeight: 500, mb: 0.5 }}>
+                            Alteração de Senha
+                        </Typography>
+                        <Typography variant="body2" sx={{ color: '#ada5b4', mb: 4 }}>
+                            Insira a sua nova senha abaixo
+                        </Typography>
 
-                {/* Campo de Senha Nova */}
-                <FormControl fullWidth variant="outlined" margin="dense">
-                    <InputLabel htmlFor="email" sx={{ color: '#54507E' }}>
-                        Nova Senha
-                    </InputLabel>
-                    <OutlinedInput
-                        id="novaSenha"
-                        type={showPassword ? 'text' : 'password'}
-                        label="Nova Senha"
-                        required
-                        startAdornment={
-                            <InputAdornment position="start">
-                                <LockOutline sx={{ color: '#54507E' }} />
-                            </InputAdornment>
-                        }
-                        endAdornment={
-                            <InputAdornment position="end">
-                                <IconButton
-                                    onClick={handleClickShowPassword}
-                                    onMouseDown={handleMouseDownPassword}
-                                    edge="end"
-                                    sx={{ color: '#54507E' }}
-                                >
-                                    {showPassword ? <EyeOff /> : <Eye />}
-                                </IconButton>
-                            </InputAdornment>
-                        }
-                        sx={{
-                            background: '#f4f1f7',
-                            borderRadius: 2,
-                            fontSize: 15,
-                            '& .MuiOutlinedInput-notchedOutline': {
-                                borderColor: 'transparent',
-                            },
-                            '&:hover .MuiOutlinedInput-notchedOutline': {
-                                borderColor: '#bdbdbd',
-                            },
-                            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                                borderColor: '#54507E',
-                                borderWidth: 2,
-                            },
-                        }}
-                    />
-                </FormControl>
+                        <FormControl fullWidth variant="outlined" margin="dense">
+                            <InputLabel htmlFor="novaSenha" sx={{ color: '#54507E' }}>
+                                Nova Senha
+                            </InputLabel>
+                            <OutlinedInput
+                                id="novaSenha"
+                                type={showNovaSenha ? 'text' : 'password'}
+                                value={novaSenha}
+                                onChange={(e) => setNovaSenha(e.target.value)}
+                                label="Nova Senha"
+                                startAdornment={
+                                    <InputAdornment position="start">
+                                        <LockOutline sx={{ color: '#54507E' }} />
+                                    </InputAdornment>
+                                }
+                                endAdornment={
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            onClick={() => setShowNovaSenha(!showNovaSenha)}
+                                            onMouseDown={(e) => e.preventDefault()}
+                                            edge="end"
+                                            sx={{ color: '#54507E' }}
+                                        >
+                                            {showNovaSenha ? <EyeOff /> : <Eye />}
+                                        </IconButton>
+                                    </InputAdornment>
+                                }
+                                sx={{
+                                    background: '#f4f1f7',
+                                    borderRadius: 2,
+                                    fontSize: 15,
+                                    '& .MuiOutlinedInput-notchedOutline': {
+                                        borderColor: 'transparent',
+                                    },
+                                    '&:hover .MuiOutlinedInput-notchedOutline': {
+                                        borderColor: '#bdbdbd',
+                                    },
+                                    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                        borderColor: '#54507E',
+                                        borderWidth: 2,
+                                    },
+                                }}
+                            />
+                        </FormControl>
 
-                {/* Campo de Confirmação de Senha */}
-                <FormControl fullWidth variant="outlined" margin="dense">
-                    <InputLabel htmlFor="confirmaSenha" sx={{ color: '#54507E' }}>
-                        Confirmar Senha
-                    </InputLabel>
-                    <OutlinedInput
-                        id="confirmaSenha"
-                        type={showPassword ? 'text' : 'password'}
-                        label="Confirmar Senha"
-                        required
-                        startAdornment={
-                            <InputAdornment position="start">
-                                <LockOutline sx={{ color: '#54507E' }} />
-                            </InputAdornment>
-                        }
-                        endAdornment={
-                            <InputAdornment position="end">
-                                <IconButton
-                                    onClick={handleClickShowPassword}
-                                    onMouseDown={handleMouseDownPassword}
-                                    edge="end"
-                                    sx={{ color: '#54507E' }}
-                                >
-                                    {showPassword ? <EyeOff /> : <Eye />}
-                                </IconButton>
-                            </InputAdornment>
-                        }
-                        sx={{
-                            background: '#f4f1f7',
-                            borderRadius: 2,
-                            fontSize: 15,
-                            '& .MuiOutlinedInput-notchedOutline': {
-                                borderColor: 'transparent',
-                            },
-                            '&:hover .MuiOutlinedInput-notchedOutline': {
-                                borderColor: '#bdbdbd',
-                            },
-                            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                                borderColor: '#54507E',
-                                borderWidth: 2,
-                            },
-                        }}
-                    />
-                </FormControl>
+                        <FormControl fullWidth variant="outlined" margin="dense">
+                            <InputLabel htmlFor="confirmaSenha" sx={{ color: '#54507E' }}>
+                                Confirmar Senha
+                            </InputLabel>
+                            <OutlinedInput
+                                id="confirmaSenha"
+                                type={showConfirmaSenha ? 'text' : 'password'}
+                                value={confirmaSenha}
+                                onChange={(e) => setConfirmaSenha(e.target.value)}
+                                label="Confirmar Senha"
+                                startAdornment={
+                                    <InputAdornment position="start">
+                                        <LockOutline sx={{ color: '#54507E' }} />
+                                    </InputAdornment>
+                                }
+                                endAdornment={
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            onClick={() => setShowConfirmaSenha(!showConfirmaSenha)}
+                                            onMouseDown={(e) => e.preventDefault()}
+                                            edge="end"
+                                            sx={{ color: '#54507E' }}
+                                        >
+                                            {showConfirmaSenha ? <EyeOff /> : <Eye />}
+                                        </IconButton>
+                                    </InputAdornment>
+                                }
+                                sx={{
+                                    background: '#f4f1f7',
+                                    borderRadius: 2,
+                                    fontSize: 15,
+                                    '& .MuiOutlinedInput-notchedOutline': {
+                                        borderColor: 'transparent',
+                                    },
+                                    '&:hover .MuiOutlinedInput-notchedOutline': {
+                                        borderColor: '#bdbdbd',
+                                    },
+                                    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                        borderColor: '#54507E',
+                                        borderWidth: 2,
+                                    },
+                                }}
+                            />
+                        </FormControl>
 
-                {/* Botão Entrar */}
-                <Button
-                    fullWidth
-                    variant="contained"
-                    sx={{
-                        mt: 3,
-                        height: 52,
-                        backgroundColor: '#54507E',
-                        fontWeight: 500,
-                        fontSize: 15,
-                        borderRadius: 2,
-                        '&:hover': {
-                            backgroundColor: '#3f3b65',
-                        },
-                    }}
-                >
-                    Alterar Senha
-                </Button>
-
-                {/* Fazer Login */}
-                <Link
-                    href="/login"
-                    underline="hover"
-                    sx={{ mt: 2, fontSize: 14, color: '#54507E' }}
-                >
-                    Faça Login Já!
-                </Link>
-
-                {/* Cadastro */}
-                <Typography variant="body2" sx={{ mt: 6, color: '#ada5b4' }}>
-                    Ainda não tem uma conta?{' '}
-                    <Link href="#" underline="hover" sx={{ color: '#54507E' }}>
-                        Cadastre-se!
-                    </Link>
-                </Typography>
+                        <Button
+                            fullWidth
+                            variant="contained"
+                            disabled={loading}
+                            onClick={handleAlterarSenha}
+                            sx={{
+                                mt: 3,
+                                height: 52,
+                                backgroundColor: '#54507E',
+                                fontWeight: 500,
+                                fontSize: 15,
+                                borderRadius: 2,
+                                '&:hover': {
+                                    backgroundColor: '#3f3b65',
+                                },
+                            }}
+                        >
+                            {loading ? <CircularProgress size={24} sx={{ color: '#fff' }} /> : 'Alterar Senha'}
+                        </Button>
+                    </>
+                ) : null}
             </Paper>
         </Box>
     );
 };
 
-export default RecuperarSenha;
+export default RedefinirSenha;
