@@ -60,7 +60,7 @@ const Login = () => {
             setSnackbarOpen(true);
 
             setTimeout(() => navigate('/ '), 800);
-            
+
 
             // Exemplo: salvar token e redirecionar
             // localStorage.setItem('token', response.data.token);
@@ -247,6 +247,8 @@ const Login = () => {
                             backgroundColor: '#3f3b65',
                         },
                     }}
+                    href='/'
+                // onClick={handleLogin}
                 >
                     {loading ? 'Entrando...' : 'Entrar'}
                 </Button>
