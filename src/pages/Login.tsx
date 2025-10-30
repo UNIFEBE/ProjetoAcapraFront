@@ -8,19 +8,79 @@ import {
     IconButton,
     FormControl,
     Paper,
-    Link
+    Link,
+    Snackbar,
+    Alert
 } from '@mui/material';
 import { Eye, EyeOff, Account, LockOutline } from 'mdi-material-ui';
 import { useState } from 'react';
+import axios from 'axios';
 import AcapraLogo from '../assets/acapraLogo.png';
-
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
+    const [email, setEmail] = useState('');
+    const [senha, setSenha] = useState('');
+    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
+
+    // Snackbar state
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState('');
+    const [snackbarSeverity, setSnackbarSeverity] = useState<'success' | 'error' | 'info' | 'warning'>('info');
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
     const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => event.preventDefault();
 
+    const handleCloseSnackbar = () => setSnackbarOpen(false);
+
+    const handleLogin = async () => {
+        if (!email || !senha) {
+            setSnackbarMessage('Por favor, preencha o e-mail e a senha.');
+            setSnackbarSeverity('warning');
+            setSnackbarOpen(true);
+            return;
+        }
+
+        try {
+            setLoading(true);
+
+            const response = await axios.post('http://localhost:5089/Usuario/login', {
+                email,
+                password: senha,
+                twoFactorCode: '',
+                twoFactorRecoveryCode: ''
+            });
+
+            console.log('Login bem-sucedido:', response.data);
+
+            setSnackbarMessage('Login realizado com sucesso!');
+            setSnackbarSeverity('success');
+            setSnackbarOpen(true);
+
+            setTimeout(() => navigate('/ '), 800);
+
+
+            // Exemplo: salvar token e redirecionar
+            // localStorage.setItem('token', response.data.token);
+            // setTimeout(() => (window.location.href = '/dashboard'), 1500);
+
+        } catch (error: any) {
+            console.error('Erro:', error.response);
+
+            const errorMsg =
+                error.response?.data?.message ||
+                error.response?.data?.title ||
+                'Falha no login. Verifique suas credenciais.';
+
+            setSnackbarMessage(`Erro: ${errorMsg}`);
+            setSnackbarSeverity('error');
+            setSnackbarOpen(true);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <Box
@@ -96,6 +156,8 @@ const Login = () => {
                     <OutlinedInput
                         id="email"
                         type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         label="E-mail"
                         required
                         startAdornment={
@@ -129,6 +191,8 @@ const Login = () => {
                     <OutlinedInput
                         id="password"
                         type={showPassword ? 'text' : 'password'}
+                        value={senha}
+                        onChange={(e) => setSenha(e.target.value)}
                         label="Senha"
                         required
                         startAdornment={
@@ -170,6 +234,8 @@ const Login = () => {
                 <Button
                     fullWidth
                     variant="contained"
+                    onClick={handleLogin}
+                    disabled={loading}
                     sx={{
                         mt: 3,
                         height: 52,
@@ -184,7 +250,7 @@ const Login = () => {
                     href='/'
                 // onClick={handleLogin}
                 >
-                    Entrar
+                    {loading ? 'Entrando...' : 'Entrar'}
                 </Button>
 
                 {/* Esqueci a senha */}
@@ -199,13 +265,28 @@ const Login = () => {
                 {/* Cadastro */}
                 <Typography variant="body2" sx={{ mt: 6, color: '#ada5b4' }}>
                     Ainda não tem uma conta?{' '}
-
                     <Link href="/cadastrarUsuario" underline="hover" sx={{ color: '#54507E' }}>
-
                         Cadastre-se!
                     </Link>
                 </Typography>
             </Paper>
+
+            {/* Snackbar estilizado */}
+            <Snackbar
+                open={snackbarOpen}
+                autoHideDuration={4000}
+                onClose={handleCloseSnackbar}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+            >
+                <Alert
+                    onClose={handleCloseSnackbar}
+                    severity={snackbarSeverity}
+                    variant="filled"
+                    sx={{ width: '100%' }}
+                >
+                    {snackbarMessage}
+                </Alert>
+            </Snackbar>
         </Box>
     );
 };
