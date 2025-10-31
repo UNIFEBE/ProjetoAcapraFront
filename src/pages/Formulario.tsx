@@ -1,4 +1,5 @@
 import Navbar from "../componentes/Navbar/Navbar";
+import { useNavigate } from "react-router-dom";
 import {
     Box,
     Button,
@@ -30,7 +31,9 @@ export const FormAdocao = () => {
         "success" | "error" | "warning"
     >("success");
 
-    const idUsuario = 1;
+    const navigate = useNavigate();
+
+    const idUsuario = localStorage.getItem('idUsuario');
     const BaseUrl = "https://api-acapra.d309group.com.br"
 
     useEffect(() => {
@@ -79,7 +82,7 @@ export const FormAdocao = () => {
 
     const handleSubmit = async () => {
         if (!validateFields()) {
-            showSnackbar("⚠️ Preencha todos os campos obrigatórios antes de enviar.", "warning");
+            showSnackbar("Preencha todos os campos obrigatórios antes de enviar.", "warning");
             return;
         }
 
@@ -88,14 +91,13 @@ export const FormAdocao = () => {
             resposta: respostas[p.id],
         }));
 
-        console.log("📦 Enviando respostas:", payload);
-
         try {
             await axios.post(
                 `${BaseUrl}/FormularioRespostas/cadastrar-respostas/${idUsuario}`,
                 payload
             );
-            showSnackbar("🐾 Formulário de adoção enviado com sucesso!", "success");
+            showSnackbar("Formulário de adoção enviado com sucesso!", "success");
+            navigate('/');
             setRespostas({});
         } catch (error) {
             console.error("Erro ao enviar respostas:", error);
@@ -155,7 +157,7 @@ export const FormAdocao = () => {
                 }}
             >
                 <Typography variant="h5" sx={{ mb: 3, color: "#54507E" }}>
-                    🐶 Formulário de Adoção
+                    🐶 Formulário de Adoção 😺
                 </Typography>
 
                 {perguntas.map((p) => (
@@ -179,7 +181,6 @@ export const FormAdocao = () => {
                             </FormControl>
                         )}
 
-                        {/* Booleano (Sim/Não) */}
                         {p.tipo_resposta === "Booleano" && (
                             <FormControl error={errors[p.id]}>
                                 <RadioGroup
@@ -194,7 +195,6 @@ export const FormAdocao = () => {
                             </FormControl>
                         )}
 
-                        {/* Selecionar (para perguntas de escolha) */}
                         {p.tipo_resposta === "Selecionar" && (
                             <FormControl sx={{ width: "50%" }} variant="outlined" error={errors[p.id]}>
                                 <InputLabel sx={{ color: "#54507E" }}>Selecione</InputLabel>

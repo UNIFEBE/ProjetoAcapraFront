@@ -23,8 +23,8 @@ const TelaAdocao = () => {
     const state = location.state as { pet?: Pet };
     const pet = state?.pet;
 
-    const adoteMe = (pet: Pet) => {
-        navigate('/formularioAdocao', { state: { pet } });
+    const adoteMe = () => {
+        navigate('/formulario');
     };
 
     if (!pet) return <Typography variant="h5">Pet não encontrado</Typography>;
@@ -160,7 +160,7 @@ const TelaAdocao = () => {
                     <Box mt={4}>
                         <Button
                             variant="contained"
-                            onClick={() => adoteMe(pet)}
+                            onClick={() => adoteMe()}
                             sx={{
                                 backgroundColor: '#FFA726',
                                 color: '#fff',
