@@ -50,20 +50,20 @@ const FormBuilder: React.FC = () => {
     <Box p={3}>
       <Typography variant="h4" gutterBottom>Cadastrar Formulário TESTE SSH</Typography>
 
-      <InputText htmlFor='titulo' id='titulo' inputLabel={"Título do Formulário"} label={"Título do Formulário"} tamanho='100' valor={title} onChange={handleTitleChange}/>
+      <InputText htmlFor='titulo' id='titulo' inputLabel={"Título do Formulário"} label={"Título do Formulário"} tamanho='100' value={title} onChange={handleTitleChange} />
 
       {/* Renderiza cada pergunta */}
       {questions.map((q, index) => (
-        
+
         <InputText
-            chave={q.id}
-            label={`Pergunta ${index + 1}`}
-            inputLabel={`Pergunta ${index + 1}`}
-            id={'pergunta'}
-            htmlFor={'pergunta'}
-            tamanho='100'
-            valor={q.text}
-            onChange={(e) => handleQuestionChange(q.id, e.target.value)}
+          key={q.id}
+          label={`Pergunta ${index + 1}`}
+          inputLabel={`Pergunta ${index + 1}`}
+          id={'pergunta'}
+          htmlFor={'pergunta'}
+          tamanho='100'
+          value={q.text}
+          onChange={(e) => handleQuestionChange(q.id, e.target.value)}
         />
 
       ))}
@@ -71,7 +71,7 @@ const FormBuilder: React.FC = () => {
       {/* Botões de ação */}
       <Box mt={2} display="flex" gap={2}>
         <Button variant="contained" onClick={handleAddQuestion}>Adicionar Pergunta</Button>
-        <Button variant="contained" sx={{background: '#FF0000'}} onClick={handleRemoveQuestion} disabled={questions.length === 0}>
+        <Button variant="contained" sx={{ background: '#FF0000' }} onClick={handleRemoveQuestion} disabled={questions.length === 0}>
           Remover Pergunta
         </Button>
         <Button variant="contained" color="success" onClick={handleSaveForm}>
