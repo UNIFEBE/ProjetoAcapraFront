@@ -6,7 +6,7 @@ interface InputTextProps {
     inputLabel: string;
     tamanho: string;
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    valor?: string;
+    value?: string;
     chave?: number;
 }
 declare const InputText: React.FC<InputTextProps>;

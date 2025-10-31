@@ -1,6 +1,5 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Box, Typography, Button, Divider, Paper } from '@mui/material';
-import { MapMarker } from 'mdi-material-ui';
 import CardInfoPet from '../componentes/CardInfoPet/CardInfoPet';
 import Navbar from '../componentes/Navbar/Navbar';
 import CustomFooter from '../componentes/Footer/Footer';

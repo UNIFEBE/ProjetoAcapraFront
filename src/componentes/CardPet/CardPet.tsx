@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './CardPet.module.css';
-import { GenderMale, GenderFemale, MapMarker } from 'mdi-material-ui';
+import { GenderMale, GenderFemale } from 'mdi-material-ui';
 
 interface CardPetProps {
     nome: string;

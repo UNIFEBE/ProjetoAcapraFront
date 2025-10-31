@@ -12,7 +12,7 @@ import {
   Alert,
   Link,
 } from "@mui/material";
-import { Account, Eye, EyeOff, LockOutline, Email, Phone, Home, MapMarker } from "mdi-material-ui";
+import { Account, Eye, EyeOff, LockOutline, Email, Phone, Home } from "mdi-material-ui";
 import { useState } from "react";
 import axios from "axios";
 import AcapraLogo from "../assets/acapraLogo.png";

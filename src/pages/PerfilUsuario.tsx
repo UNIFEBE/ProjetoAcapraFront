@@ -8,9 +8,6 @@ import {
     InputLabel,
     OutlinedInput,
     Typography,
-    IconButton,
-    MenuItem,
-    Select,
     FormHelperText,
     Divider,
     Snackbar,
@@ -18,9 +15,6 @@ import {
 } from "@mui/material";
 import {
     Account,
-    Eye,
-    EyeOff,
-    LockOutline,
     Phone,
     EmailOutline,
     HomeOutline,
@@ -31,7 +25,6 @@ import AcapraLogo from "../assets/acapraLogo.png";
 import Navbar from "../componentes/Navbar/Navbar";
 
 const PerfilUsuario = () => {
-    const [showPassword, setShowPassword] = useState(false);
     const [erros, setErros] = useState<{ [key: string]: string }>({});
 
     const BaseUrl = "https://api-acapra.d309group.com.br"
@@ -70,17 +63,9 @@ const PerfilUsuario = () => {
         numero: "",
     });
 
-    const handleClickShowPassword = () => setShowPassword((show) => !show);
-    const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) =>
-        event.preventDefault();
-
     const handleChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
     ) => {
-        setUsuario({ ...usuario, [e.target.name]: e.target.value });
-    };
-
-    const handleSelectChange = (e: any) => {
         setUsuario({ ...usuario, [e.target.name]: e.target.value });
     };
 
@@ -114,7 +99,7 @@ const PerfilUsuario = () => {
 
     const handleSubmit = () => {
         if (!validarCampos()) {
-            showSnackbar("⚠️ Preencha todos os campos obrigatórios antes de salvar.", "warning");
+            showSnackbar("Preencha todos os campos obrigatórios antes de salvar.", "warning");
             return;
         }
 
@@ -128,7 +113,7 @@ const PerfilUsuario = () => {
     };
 
     const handleCloseSnackbar = (
-        event?: React.SyntheticEvent | Event,
+        _event?: React.SyntheticEvent | Event,
         reason?: string
     ) => {
         if (reason === "clickaway") return;
@@ -278,7 +263,6 @@ const PerfilUsuario = () => {
             </Snackbar>
         </Box>
     );
-
 
 };
 

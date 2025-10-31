@@ -16,7 +16,7 @@ import { useState } from "react";
 import axios from "axios";
 
 export const CadastrarVoluntario = () => {
-  const [imagemPerfil, setImagemPerfil] = useState<string | null>(null);
+  // const [imagemPerfil, setImagemPerfil] = useState<string | null>(null);
   const [pesquisa, setPesquisa] = useState("");
   const BaseUrl = "https://api-acapra.d309group.com.br";
 
@@ -55,14 +55,14 @@ export const CadastrarVoluntario = () => {
 
   const handleCloseSnackbar = () => setSnackbarOpen(false);
 
-  const handleImagemChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => setImagemPerfil(reader.result as string);
-      reader.readAsDataURL(file);
-    }
-  };
+  // const handleImagemChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   const file = event.target.files?.[0];
+  //   if (file) {
+  //     const reader = new FileReader();
+  //     reader.onloadend = () => setImagemPerfil(reader.result as string);
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -204,7 +204,7 @@ export const CadastrarVoluntario = () => {
         numero: "",
       });
       setOriginalData(null);
-      setImagemPerfil(null);
+      // setImagemPerfil(null);
     } catch (error) {
       console.error("Erro ao deletar usuário:", error);
       setSnackbarMessage("Erro ao deletar usuário. Verifique a API.");
