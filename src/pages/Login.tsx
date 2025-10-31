@@ -59,11 +59,10 @@ const Login = () => {
                 const usuario = response.data.data;
 
                 // Guarda os dados do usuário no localStorage
-                localStorage.setItem('usuario', JSON.stringify(usuario));
+                localStorage.setItem('idUsuario', JSON.stringify(usuario.id));
 
-                 // Guarda o tipo de usuário separadamente (facilita verificação rápida)
+                // Guarda o tipo de usuário separadamente (facilita verificação rápida)
                 localStorage.setItem('tipoUsuario', usuario.tipo_usuario);
-                console.log(usuario.tipo_usuario)
 
                 let agora = new Date();
                 agora.setHours(agora.getHours() + 1);
@@ -75,7 +74,7 @@ const Login = () => {
 
                 // Redireciona após 1,2s
                 setTimeout(() => {
-                    window.location.href = '/'; 
+                    window.location.href = '/';
                 }, 1200);
             } else {
                 // Caso statusCode diferente de 200

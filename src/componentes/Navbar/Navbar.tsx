@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { Menu, Close } from 'mdi-material-ui';
 import UserPhoto from '../../assets/acapraIcone.png';
+import logoacaprabranca from '../../assets/logoacaprabranca.png';
 
 const Navbar = () => {
   const [menuAberto, setMenuAberto] = useState(false);
@@ -10,7 +11,7 @@ const Navbar = () => {
 
   const horaLogin = localStorage.getItem('HoraLogin');
   const tipo = localStorage.getItem('tipoUsuario');
-  
+
 
   let agora = new Date();
   let sessaoAtiva = false;
@@ -19,21 +20,17 @@ const Navbar = () => {
 
     const horaExpiracao = new Date(horaLogin);
     if (horaExpiracao > agora) {
-        sessaoAtiva = true;
+      sessaoAtiva = true;
     } else {
-        sessaoAtiva = false;
+      sessaoAtiva = false;
     }
-} else {
+  } else {
     sessaoAtiva = false;
-}
+  }
 
-if (!sessaoAtiva) {
+  if (!sessaoAtiva) {
     window.location.href = '/login';
-}
-
-  const token = localStorage.getItem('token');
-  const dadosToken = token ? JSON.parse(atob(token.split('.')[1])) : null;
-  // const roleUser = dadosToken.Role;
+  }
 
   const toggleMenu = () => {
     setMenuAberto(!menuAberto);
@@ -47,6 +44,7 @@ if (!sessaoAtiva) {
       </div>
 
       <nav className={`${styles.navLeft} ${menuAberto ? styles.mobileMenuAberto : ''}`}>
+        <img src={logoacaprabranca} alt="Logo" className={styles.logo} />
         <Link to="/" onClick={() => setMenuAberto(false)}>Home</Link>
         <div
           className={`${styles.dropdown} ${cadastrosOpen ? styles.open : ''}`}
@@ -61,17 +59,17 @@ if (!sessaoAtiva) {
             {/* <Link to="/cadastrarUsuario" onClick={() => setMenuAberto(false)}>
               Cadastrar Usuário
             </Link> */}
-            { tipo == 'Administrador' && (
-            <Link to="/cadastrarVoluntario" onClick={() => setMenuAberto(false)}>
-              Cadastrar Voluntário
-            </Link>
+            {tipo == 'Administrador' && (
+              <Link to="/cadastrarVoluntario" onClick={() => setMenuAberto(false)}>
+                Cadastrar Voluntário
+              </Link>
             )}
             <Link to="/cadastrarPet" onClick={() => setMenuAberto(false)}>
               Cadastrar Pet
             </Link>
-            <Link to="/cadastrarFormulario" onClick={() => setMenuAberto(false)}>
+            {/* <Link to="/cadastrarFormulario" onClick={() => setMenuAberto(false)}>
               Cadastrar Formulário
-            </Link>
+            </Link> */}
           </div>
         </div>
         <Link to="/sobre" onClick={() => setMenuAberto(false)}>Sobre nós</Link>

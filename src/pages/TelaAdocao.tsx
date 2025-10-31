@@ -15,8 +15,6 @@ interface Pet {
     castrado: boolean;
     vacinado: boolean;
     descricao?: string;
-    bairro?: string;
-    cidade?: string;
 }
 
 const TelaAdocao = () => {
@@ -25,8 +23,8 @@ const TelaAdocao = () => {
     const state = location.state as { pet?: Pet };
     const pet = state?.pet;
 
-    const adoteMe = (pet: Pet) => {
-        navigate('/formularioAdocao', { state: { pet } });
+    const adoteMe = () => {
+        navigate('/formulario');
     };
 
     if (!pet) return <Typography variant="h5">Pet não encontrado</Typography>;
@@ -118,12 +116,6 @@ const TelaAdocao = () => {
                             Endereço:
                         </Typography>
                         <Box display="flex" alignItems="center" mb={1}>
-                            <MapMarker sx={{ color: 'orange', mr: 1 }} />
-                            <Typography>
-                                {pet.bairro || 'Bairro não informado'}
-                                <br />
-                                {pet.cidade || 'Cidade não informada'}/SC
-                            </Typography>
                         </Box>
                     </Box>
 
@@ -168,7 +160,7 @@ const TelaAdocao = () => {
                     <Box mt={4}>
                         <Button
                             variant="contained"
-                            onClick={() => adoteMe(pet)}
+                            onClick={() => adoteMe()}
                             sx={{
                                 backgroundColor: '#FFA726',
                                 color: '#fff',

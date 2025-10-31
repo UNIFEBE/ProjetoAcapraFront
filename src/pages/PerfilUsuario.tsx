@@ -34,6 +34,8 @@ const PerfilUsuario = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [erros, setErros] = useState<{ [key: string]: string }>({});
 
+    const BaseUrl = "https://api-acapra.d309group.com.br"
+
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState("");
     const [snackbarSeverity, setSnackbarSeverity] = useState<
@@ -83,9 +85,9 @@ const PerfilUsuario = () => {
     };
 
     useEffect(() => {
-        const idUsuario = localStorage.getItem("userId") || "1";
+        const idUsuario = localStorage.getItem("idUsuario");
         axios
-            .get(`http://localhost:5089/Usuario/buscar-usuario/${idUsuario}`)
+            .get(`${BaseUrl}/Usuario/buscar-usuario/${idUsuario}`)
             .then((res) => {
                 if (res.data && res.data.data) {
                     setUsuario(res.data.data);
@@ -117,7 +119,7 @@ const PerfilUsuario = () => {
         }
 
         axios
-            .put(`http://localhost:5089/Usuario/atualizar-usuario/${usuario.id}`, usuario)
+            .put(`${BaseUrl}/Usuario/atualizar-usuario/${usuario.id}`, usuario)
             .then(() => showSnackbar("Perfil atualizado com sucesso!", "success"))
             .catch((err) => {
                 console.error("Erro ao atualizar usuário:", err);
@@ -197,78 +199,11 @@ const PerfilUsuario = () => {
                         }}
                     >
                         {renderInput("nome", "Nome", "text", usuario.nome, erros, handleChange, <Account sx={{ color: "#54507E" }} />)}
-                        {renderInput("cpf", "CPF", "text", usuario.cpf, erros, handleChange)}
+                        {/* {renderInput("cpf", "CPF", "text", usuario.cpf, erros, handleChange)} */}
                         {renderInput("celular", "Celular", "text", usuario.celular, erros, handleChange, <Phone sx={{ color: "#54507E" }} />)}
                         {renderInput("email", "E-mail", "email", usuario.email, erros, handleChange, <EmailOutline sx={{ color: "#54507E" }} />)}
                         {renderInput("telefone", "Telefone", "text", usuario.telefone ?? "", erros, handleChange)}
 
-                        <FormControl
-                            fullWidth
-                            variant="outlined"
-                            margin="dense"
-                            error={!!erros.tipo_usuario}
-                            sx={{ flex: { xs: "1 1 100%", sm: "1 1 48%" } }}
-                        >
-                            <InputLabel id="tipo_usuario" sx={{ color: "#54507E" }}>
-                                Tipo de Usuário
-                            </InputLabel>
-                            <Select
-                                labelId="tipo_usuario"
-                                name="tipo_usuario"
-                                value={usuario.tipo_usuario}
-                                label="Tipo de Usuário"
-                                onChange={handleSelectChange}
-                                sx={outlinedInputStyles}
-                            >
-                                <MenuItem value="Administrador">Administrador</MenuItem>
-                                <MenuItem value="Voluntario">Voluntário</MenuItem>
-                                <MenuItem value="Adotante">Adotante</MenuItem>
-                            </Select>
-                            {erros.tipo_usuario && (
-                                <FormHelperText>{erros.tipo_usuario}</FormHelperText>
-                            )}
-                        </FormControl>
-
-                        <FormControl
-                            fullWidth
-                            variant="outlined"
-                            margin="dense"
-                            error={!!erros.senha}
-                            sx={{ flex: { xs: "1 1 100%", sm: "1 1 48%" } }}
-                        >
-                            <InputLabel htmlFor="senha" sx={{ color: "#54507E" }}>
-                                Senha
-                            </InputLabel>
-                            <OutlinedInput
-                                id="senha"
-                                name="senha"
-                                type={showPassword ? "text" : "password"}
-                                value={usuario.senha}
-                                onChange={handleChange}
-                                label="Senha"
-                                startAdornment={
-                                    <InputAdornment position="start">
-                                        <LockOutline sx={{ color: "#54507E" }} />
-                                    </InputAdornment>
-                                }
-                                endAdornment={
-                                    <InputAdornment position="end">
-                                        <IconButton
-                                            onClick={handleClickShowPassword}
-                                            onMouseDown={handleMouseDownPassword}
-                                            edge="end"
-                                            sx={{ color: "#54507E" }}
-                                        >
-                                            {showPassword ? <EyeOff /> : <Eye />}
-                                        </IconButton>
-                                    </InputAdornment>
-                                }
-                                sx={outlinedInputStyles}
-                            />
-                            {erros.senha && (
-                                <FormHelperText>{erros.senha}</FormHelperText>
-                            )}
-                        </FormControl>
                     </Box>
                 </Box>
 
@@ -376,6 +311,7 @@ const renderInput = (
             startAdornment={
                 startIcon && <InputAdornment position="start">{startIcon}</InputAdornment>
             }
+            disabled={name === "cpf"}
             sx={outlinedInputStyles}
         />
         {erros[name] && <FormHelperText>{erros[name]}</FormHelperText>}

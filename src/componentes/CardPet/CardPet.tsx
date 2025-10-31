@@ -12,7 +12,7 @@ interface CardPetProps {
     genero: 'macho' | 'femea';
 }
 
-const CardPet: React.FC<CardPetProps> = ({ nome, raca, idade, cidade, bairro, imagem, genero }) => {
+const CardPet: React.FC<CardPetProps> = ({ nome, raca, idade, imagem, genero }) => {
     const iconGenero = genero === 'macho' ? true : false;
 
     return (
@@ -22,11 +22,6 @@ const CardPet: React.FC<CardPetProps> = ({ nome, raca, idade, cidade, bairro, im
             <div className={styles.info}>
                 <span className={styles.descricao}>{raca} - {idade}</span>
                 <h2 className={styles.nome}>{nome}</h2>
-
-                <div className={styles.local}>
-                    <MapMarker />
-                    <span>{cidade} - {bairro}</span>
-                </div>
             </div>
 
             <div className={`${styles.genero} ${genero === 'macho' ? styles.macho : styles.femea}`}>

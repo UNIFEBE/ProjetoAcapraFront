@@ -21,6 +21,8 @@ const RecuperarSenha = () => {
     const [loading, setLoading] = useState(false);
     const [erro, setErro] = useState('');
 
+    const BaseUrl = "https://api-acapra.d309group.com.br"
+
     const SERVICE_ID = 'service_89bkqfa';
     const TEMPLATE_ID = 'template_gl039ud';
     const PUBLIC_KEY = 'augjtOFxEwjqjwRcX';
@@ -48,11 +50,32 @@ const RecuperarSenha = () => {
         setLoading(true);
 
         try {
-            let agora = new Date()
+            const resposta = await fetch(BaseUrl + '/Usuario/verificar-email', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(email)
+            });
+
+            if (!resposta.ok) {
+                throw new Error('Erro ao verificar e-mail.');
+            }
+
+            const existe = await resposta.json();
+            console.log(existe)
+
+            if (!existe) {
+                setErro('E-mail não encontrado no sistema.');
+                setLoading(false);
+                return;
+            }
+
+            let agora = new Date();
             agora.setHours(agora.getHours() + 1);
-            const textoToken = agora.toISOString() + 'acapraApi'
+            const textoToken = agora.toISOString() + 'acapraApi';
             const token = btoa(textoToken);
-            const resetLink = `http://localhost:5173/redefinirSenha?token=${token}`;
+            const resetLink = `https://acapra.d309group.com.br/redefinirSenha?token=${token}`;
 
             const templateParams = {
                 to_email: email,
@@ -61,6 +84,7 @@ const RecuperarSenha = () => {
 
             await emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams, PUBLIC_KEY);
 
+            localStorage.setItem('email', email)
             setMensagemEnviada(true);
             setEmail('');
         } catch (err) {
@@ -189,12 +213,12 @@ const RecuperarSenha = () => {
                         },
                     }}
                 >
-                    {loading ? 'Enviando...' : mensagemEnviada ? 'Enviado!' : 'Enviar e-mail'}
+                    {loading ? 'Verificando...' : mensagemEnviada ? 'Enviado!' : 'Enviar e-mail'}
                 </Button>
 
                 {mensagemEnviada && (
                     <AlertEmail>
-                        Um email foi enviado com um link para a redefinição de sua senha
+                        Um e-mail foi enviado com um link para a redefinição de sua senha
                     </AlertEmail>
                 )}
 

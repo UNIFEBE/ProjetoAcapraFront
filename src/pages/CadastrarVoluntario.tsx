@@ -5,7 +5,6 @@ import InputText from "../componentes/inputs/inputText/InputText";
 import {
   Box,
   Button,
-  Typography,
   FormControl,
   InputLabel,
   Select,
@@ -23,7 +22,6 @@ export const CadastrarVoluntario = () => {
 
   const tipoUsuario = localStorage.getItem("tipoUsuario");
 
-  // 🔒 Verificação de permissão
   if (!tipoUsuario || tipoUsuario.toLowerCase() !== "administrador") {
     window.location.href = "/";
   }
@@ -49,7 +47,6 @@ export const CadastrarVoluntario = () => {
 
   const [originalData, setOriginalData] = useState<typeof formData | null>(null);
 
-  // 📢 Snackbar states
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState<
@@ -58,7 +55,6 @@ export const CadastrarVoluntario = () => {
 
   const handleCloseSnackbar = () => setSnackbarOpen(false);
 
-  // 🖼️ Função para carregar imagem
   const handleImagemChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
@@ -68,12 +64,10 @@ export const CadastrarVoluntario = () => {
     }
   };
 
-  // Atualiza os campos do formulário
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
-  // 🔍 Buscar usuário
   const handlePesquisar = async () => {
     if (!pesquisa.trim()) {
       setSnackbarMessage("Digite algo para pesquisar!");
@@ -133,7 +127,6 @@ export const CadastrarVoluntario = () => {
     }
   };
 
-  // ✏️ Editar usuário
   const handleEditar = async () => {
     if (!originalData) {
       setSnackbarMessage("Pesquise um usuário primeiro!");
@@ -173,7 +166,6 @@ export const CadastrarVoluntario = () => {
     }
   };
 
-  // 🗑️ Deletar usuário
   const handleDeletar = async () => {
     if (!formData.id) {
       setSnackbarMessage("Pesquise um usuário antes de deletar!");
@@ -193,7 +185,6 @@ export const CadastrarVoluntario = () => {
       setSnackbarSeverity("success");
       setSnackbarOpen(true);
 
-      // Limpa o formulário após exclusão
       setFormData({
         id: 0,
         nome: "",
@@ -342,7 +333,6 @@ export const CadastrarVoluntario = () => {
 
       <CustomFooter />
 
-      {/* 📢 Snackbar global */}
       <Snackbar
         open={snackbarOpen}
         autoHideDuration={4000}
