@@ -4,7 +4,7 @@ import CardPet from "../componentes/CardPet/CardPet";
 import Navbar from "../componentes/Navbar/Navbar";
 import { Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import CustomFooter from "../componentes/Footer/Footer";
+// import CustomFooter from "../componentes/Footer/Footer";
 
 export const Home = () => {
     const navigate = useNavigate();
@@ -15,24 +15,6 @@ export const Home = () => {
 
     const handleCardClick = (pet: any) => {
         navigate('/adocao', { state: { pet } });
-    };
-
-    const verificaToken = () => {
-        let token = localStorage.getItem('token');
-        if (!token) {
-            alert('Você não está logado. Por favor, faça login para continuar.');
-            navigate('/login');
-            return;
-        }
-        const dadosToken: { [key: string]: any } = JSON.parse(atob(token.split('.')[1]));
-        const exp = dadosToken.exp;
-        const dataAtual = Math.floor(Date.now() / 1000);
-        if (exp < dataAtual) {
-            alert('Seu token expirou. Por favor, faça login novamente.');
-            navigate('/login');
-        } else {
-            console.log('Token válido');
-        }
     };
 
     const buscarPets = async () => {
