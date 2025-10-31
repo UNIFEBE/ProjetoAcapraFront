@@ -8,7 +8,7 @@ interface InputTextProps {
   inputLabel?: string;
   tamanho: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  value?: string; // <- agora é value, não valor
+  value?: string;
 }
 
 const InputText: React.FC<InputTextProps> = ({

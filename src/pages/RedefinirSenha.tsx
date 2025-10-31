@@ -75,7 +75,7 @@ const RedefinirSenha = () => {
             setTimeout(() => navigate('/login', { replace: true }), 2000);
             return;
         }
-
+        console.log(token)
         const valido = tokenAindaValido(tokenParam);
 
         setTimeout(() => {
