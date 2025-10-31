@@ -34,6 +34,8 @@ const PerfilUsuario = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [erros, setErros] = useState<{ [key: string]: string }>({});
 
+    const BaseUrl = "https://api-acapra.d309group.com.br"
+
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState("");
     const [snackbarSeverity, setSnackbarSeverity] = useState<
@@ -85,7 +87,7 @@ const PerfilUsuario = () => {
     useEffect(() => {
         const idUsuario = localStorage.getItem("userId") || "1";
         axios
-            .get(`http://localhost:5089/Usuario/buscar-usuario/${idUsuario}`)
+            .get(`${BaseUrl}/Usuario/buscar-usuario/${idUsuario}`)
             .then((res) => {
                 if (res.data && res.data.data) {
                     setUsuario(res.data.data);
@@ -117,7 +119,7 @@ const PerfilUsuario = () => {
         }
 
         axios
-            .put(`http://localhost:5089/Usuario/atualizar-usuario/${usuario.id}`, usuario)
+            .put(`${BaseUrl}/Usuario/atualizar-usuario/${usuario.id}`, usuario)
             .then(() => showSnackbar("Perfil atualizado com sucesso!", "success"))
             .catch((err) => {
                 console.error("Erro ao atualizar usuário:", err);

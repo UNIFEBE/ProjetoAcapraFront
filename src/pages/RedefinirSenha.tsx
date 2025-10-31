@@ -21,6 +21,8 @@ const RedefinirSenha = () => {
     const [showNovaSenha, setShowNovaSenha] = useState(false);
     const [showConfirmaSenha, setShowConfirmaSenha] = useState(false);
 
+    const BaseUrl = "https://api-acapra.d309group.com.br"
+
     const [token, setToken] = useState<string | null>(null);
     const [novaSenha, setNovaSenha] = useState('');
     const [confirmaSenha, setConfirmaSenha] = useState('');
@@ -36,9 +38,8 @@ const RedefinirSenha = () => {
         try {
             const decoded = decodeURIComponent(escape(window.atob(tokenBase64)));
 
-            // Verifica se contém a substring esperada
             if (!decoded.includes('acapraApi')) {
-                console.warn('Token inválido: não contém "acapraApi".');
+                console.warn('Token inválido.');
                 return null;
             }
 
@@ -46,14 +47,14 @@ const RedefinirSenha = () => {
             const data = new Date(dataString);
 
             if (isNaN(data.getTime())) {
-                console.warn('Token inválido: data inválida.');
+                console.warn('Token inválido.');
                 return null;
             }
 
             return data;
         } catch (err) {
             console.error('Erro ao decodificar token:', err);
-            return null; // Token malformado ou incompleto
+            return null;
         }
     }
 
@@ -64,7 +65,6 @@ const RedefinirSenha = () => {
         return agora <= dataExpiracao;
     }
 
-    // 🔹 Captura o token e valida
     useEffect(() => {
         const tokenParam = searchParams.get('token');
         setToken(tokenParam);
@@ -89,7 +89,6 @@ const RedefinirSenha = () => {
         }, 800);
     }, []);
 
-    // 🔹 Envio da nova senha
     const handleAlterarSenha = async () => {
         setErro(null);
         setMensagem(null);
@@ -99,26 +98,39 @@ const RedefinirSenha = () => {
             return;
         }
 
-        if (!token) {
-            setErro('Token ausente.');
+        const email = localStorage.getItem('email');
+        if (!email) {
+            setErro('E-mail não encontrado. Faça login novamente.');
             return;
         }
 
         try {
             setLoading(true);
-            // Exemplo real:
-            // await axios.post('https://api.acapra.com.br/auth/redefinir-senha', {
-            //   token,
-            //   novaSenha,
-            // });
 
-            // Simulação
-            await new Promise((resolve) => setTimeout(resolve, 1500));
-            setMensagem('Senha alterada com sucesso! Você já pode fazer login.');
-            setTimeout(() => navigate('/login', { replace: true }), 2000);
-        } catch (err) {
-            console.error(err);
-            setErro('Erro ao alterar a senha. Tente novamente.');
+            const response = await axios.put(
+                `${BaseUrl}/Usuario/redefinir-senha`,
+                {
+                    email,
+                    novaSenha,
+                },
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                }
+            );
+
+            if (response.status === 200) {
+                setMensagem('Senha alterada com sucesso! Você já pode fazer login.');
+                localStorage.removeItem('email');
+                setTimeout(() => navigate('/login', { replace: true }), 2000);
+            } else {
+                setErro('Não foi possível alterar a senha. Tente novamente.');
+            }
+        } catch (err: any) {
+            console.error('Erro ao alterar senha:', err);
+            const msg = 'Erro ao alterar a senha. Verifique os dados e tente novamente.';
+            setErro(msg);
         } finally {
             setLoading(false);
         }

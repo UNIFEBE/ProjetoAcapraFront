@@ -30,14 +30,14 @@ export const FormAdocao = () => {
         "success" | "error" | "warning"
     >("success");
 
-    // ID do usuário — pode ser substituído depois pelo usuário logado
     const idUsuario = 1;
+    const BaseUrl = "https://api-acapra.d309group.com.br"
 
     useEffect(() => {
         const fetchPerguntas = async () => {
             try {
                 const response = await axios.get(
-                    "http://localhost:5089/FormularioPergunta/buscar-perguntas"
+                    BaseUrl + "/FormularioPergunta/buscar-perguntas"
                 );
                 setPerguntas(response.data);
             } catch (error) {
@@ -92,7 +92,7 @@ export const FormAdocao = () => {
 
         try {
             await axios.post(
-                `http://localhost:5089/FormularioRespostas/cadastrar-respostas/${idUsuario}`,
+                `${BaseUrl}/FormularioRespostas/cadastrar-respostas/${idUsuario}`,
                 payload
             );
             showSnackbar("🐾 Formulário de adoção enviado com sucesso!", "success");

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { Menu, Close } from 'mdi-material-ui';
 import UserPhoto from '../../assets/acapraIcone.png';
+import logoacaprabranca from '../../assets/logoacaprabranca.png';
 
 const Navbar = () => {
   const [menuAberto, setMenuAberto] = useState(false);
@@ -24,6 +25,7 @@ const Navbar = () => {
       </div>
 
       <nav className={`${styles.navLeft} ${menuAberto ? styles.mobileMenuAberto : ''}`}>
+        <img src={logoacaprabranca} alt="Logo" className={styles.logo} />
         <Link to="/" onClick={() => setMenuAberto(false)}>Home</Link>
         <div
           className={`${styles.dropdown} ${cadastrosOpen ? styles.open : ''}`}

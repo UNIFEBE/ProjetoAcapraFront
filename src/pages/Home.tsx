@@ -11,6 +11,8 @@ export const Home = () => {
     const [pets, setPets] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
 
+    const BaseUrl = "https://api-acapra.d309group.com.br"
+
     const handleCardClick = (pet: any) => {
         navigate('/adocao', { state: { pet } });
     };
@@ -35,7 +37,7 @@ export const Home = () => {
 
     const buscarPets = async () => {
         try {
-            const response = await axios.get("http://localhost:5089/Pet/buscar-pets-disponiveis");
+            const response = await axios.get(BaseUrl + "/Pet/buscar-pets-disponiveis");
             const petsApi = response.data;
 
             // Mapeia o formato da API para o formato esperado pelo CardPet
@@ -44,8 +46,6 @@ export const Home = () => {
                 nome: pet.nome,
                 raca: pet.raca,
                 idade: calcularIdade(pet.data_nascimento),
-                cidade: pet.cidade ?? "Não informado",
-                bairro: pet.bairro ?? "Não informado",
                 imagem: converterImagem(pet.imagem),
                 genero: pet.sexo === "M" ? "macho" : "femea",
                 descricao: pet.descricao,

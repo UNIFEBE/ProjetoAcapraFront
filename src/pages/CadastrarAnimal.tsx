@@ -24,6 +24,8 @@ export const CadastrarAnimal = () => {
     const [castrado, setCastrado] = useState(false);
     const [imagem, setImagem] = useState<File | null>(null);
 
+    const BaseUrl = "https://api-acapra.d309group.com.br"
+
     const [pet, setPet] = useState({
         nome: "",
         sexo: "",
@@ -89,7 +91,7 @@ export const CadastrarAnimal = () => {
 
             console.log("📦 Enviando dados do pet:", payload);
 
-            const response = await axios.post("http://localhost:5089/Pet/inserir-pet", payload);
+            const response = await axios.post(BaseUrl + "/Pet/inserir-pet", payload);
 
             console.log("📩 Resposta da API de inserir Pet:", response.data);
 
@@ -107,7 +109,7 @@ export const CadastrarAnimal = () => {
                 console.log("📤 Enviando imagem do pet ID:", petId);
 
                 await axios.post(
-                    `http://localhost:5089/Pet/inserir-imagem-pet/${petId}`,
+                    `${BaseUrl}/Pet/inserir-imagem-pet/${petId}`,
                     formData,
                     {
                         headers: {

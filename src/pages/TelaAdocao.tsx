@@ -15,8 +15,6 @@ interface Pet {
     castrado: boolean;
     vacinado: boolean;
     descricao?: string;
-    bairro?: string;
-    cidade?: string;
 }
 
 const TelaAdocao = () => {
@@ -118,12 +116,6 @@ const TelaAdocao = () => {
                             Endereço:
                         </Typography>
                         <Box display="flex" alignItems="center" mb={1}>
-                            <MapMarker sx={{ color: 'orange', mr: 1 }} />
-                            <Typography>
-                                {pet.bairro || 'Bairro não informado'}
-                                <br />
-                                {pet.cidade || 'Cidade não informada'}/SC
-                            </Typography>
                         </Box>
                     </Box>
 
