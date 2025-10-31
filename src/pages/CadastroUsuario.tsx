@@ -21,6 +21,7 @@ const CadastroUsuario = () => {
   const [showPassword1, setShowPassword1] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
   const [loading, setLoading] = useState(false);
+  const BaseUrl = "https://api-acapra.d309group.com.br"
 
   // Snackbar
   const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -89,7 +90,7 @@ const CadastroUsuario = () => {
       };
 
       const response = await axios.post(
-        "http://localhost:5089/Usuario/cadastrar-usuario",
+        BaseUrl + "/Usuario/cadastrar-usuario",
         payload,
         {
           headers: {

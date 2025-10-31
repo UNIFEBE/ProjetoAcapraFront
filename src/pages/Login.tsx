@@ -16,14 +16,15 @@ import { Eye, EyeOff, Account, LockOutline } from 'mdi-material-ui';
 import { useState } from 'react';
 import axios from 'axios';
 import AcapraLogo from '../assets/acapraLogo.png';
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
     const [loading, setLoading] = useState(false);
-    const navigate = useNavigate();
+    const BaseUrl = "https://api-acapra.d309group.com.br"
+    // const navigate = useNavigate();
 
     // Snackbar state
     const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -46,28 +47,45 @@ const Login = () => {
         try {
             setLoading(true);
 
-            const response = await axios.post('http://localhost:5089/Usuario/login', {
+            const response = await axios.post(BaseUrl + '/Usuario/login', {
                 email,
                 password: senha,
                 twoFactorCode: '',
                 twoFactorRecoveryCode: ''
             });
 
-            console.log('Login bem-sucedido:', response.data);
+            // Verifica se o login foi bem-sucedido
+            if (response.data.statusCode === 200) {
+                const usuario = response.data.data;
 
-            setSnackbarMessage('Login realizado com sucesso!');
-            setSnackbarSeverity('success');
-            setSnackbarOpen(true);
+                // Guarda os dados do usuário no localStorage
+                localStorage.setItem('usuario', JSON.stringify(usuario));
 
-            setTimeout(() => navigate('/ '), 800);
+                 // Guarda o tipo de usuário separadamente (facilita verificação rápida)
+                localStorage.setItem('tipoUsuario', usuario.tipo_usuario);
+                console.log(usuario.tipo_usuario)
 
+                let agora = new Date();
+                agora.setHours(agora.getHours() + 1);
+                localStorage.setItem('HoraLogin', agora.toISOString())
 
-            // Exemplo: salvar token e redirecionar
-            // localStorage.setItem('token', response.data.token);
-            // setTimeout(() => (window.location.href = '/dashboard'), 1500);
+                setSnackbarMessage(response.data.message || 'Login realizado com sucesso!');
+                setSnackbarSeverity('success');
+                setSnackbarOpen(true);
+
+                // Redireciona após 1,2s
+                setTimeout(() => {
+                    window.location.href = '/'; 
+                }, 1200);
+            } else {
+                // Caso statusCode diferente de 200
+                setSnackbarMessage('Credenciais incorretas. Tente novamente.');
+                setSnackbarSeverity('error');
+                setSnackbarOpen(true);
+            }
 
         } catch (error: any) {
-            console.error('Erro:', error.response);
+            console.error('Erro no login:', error.response);
 
             const errorMsg =
                 error.response?.data?.message ||
@@ -95,7 +113,7 @@ const Login = () => {
                 fontFamily: 'Poppins, sans-serif',
             }}
         >
-            {/* Blob SVG */}
+            {/* Blob SVG decorativo */}
             <Box
                 component="svg"
                 viewBox="0 0 200 200"
@@ -247,8 +265,6 @@ const Login = () => {
                             backgroundColor: '#3f3b65',
                         },
                     }}
-                    href='/'
-                // onClick={handleLogin}
                 >
                     {loading ? 'Entrando...' : 'Entrar'}
                 </Button>
