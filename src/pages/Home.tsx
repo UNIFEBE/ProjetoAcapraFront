@@ -4,7 +4,7 @@ import CardPet from "../componentes/CardPet/CardPet";
 import Navbar from "../componentes/Navbar/Navbar";
 import { Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-// import CustomFooter from "../componentes/Footer/Footer";
+import CustomFooter from "../componentes/Footer/Footer";
 
 export const Home = () => {
     const navigate = useNavigate();
@@ -22,7 +22,6 @@ export const Home = () => {
             const response = await axios.get(BaseUrl + "/Pet/buscar-pets-disponiveis");
             const petsApi = response.data;
 
-            // Mapeia o formato da API para o formato esperado pelo CardPet
             const petsFormatados = petsApi.map((pet: any) => ({
                 id: pet.id,
                 nome: pet.nome,
@@ -46,13 +45,11 @@ export const Home = () => {
         }
     };
 
-    // Função para converter Base64 da API em uma URL exibível no <img>
     const converterImagem = (base64: string) => {
         if (!base64) return "";
         return `data:image/jpeg;base64,${base64}`;
     };
 
-    // Função para calcular idade com base na data de nascimento
     const calcularIdade = (dataNasc: string) => {
         if (!dataNasc) return "Idade não informada";
         const nascimento = new Date(dataNasc);
@@ -113,6 +110,7 @@ export const Home = () => {
                     ))}
                 </Box>
             )}
+            <CustomFooter />
         </div>
     );
 };
