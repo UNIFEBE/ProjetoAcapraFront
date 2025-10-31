@@ -10,6 +10,8 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import { useState } from "react";
 import axios from "axios";
@@ -17,9 +19,17 @@ import axios from "axios";
 export const CadastrarVoluntario = () => {
   const [imagemPerfil, setImagemPerfil] = useState<string | null>(null);
   const [pesquisa, setPesquisa] = useState("");
+  const BaseUrl = "https://api-acapra.d309group.com.br";
+
+  const tipoUsuario = localStorage.getItem("tipoUsuario");
+
+  // 🔒 Verificação de permissão
+  if (!tipoUsuario || tipoUsuario.toLowerCase() !== "administrador") {
+    window.location.href = "/";
+  }
 
   const [formData, setFormData] = useState({
-    id: 0, // adicionado para update
+    id: 0,
     nome: "",
     email: "",
     cpf: "",
@@ -39,7 +49,16 @@ export const CadastrarVoluntario = () => {
 
   const [originalData, setOriginalData] = useState<typeof formData | null>(null);
 
-  // Função para carregar imagem
+  // 📢 Snackbar states
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState<
+    "success" | "error" | "info" | "warning"
+  >("info");
+
+  const handleCloseSnackbar = () => setSnackbarOpen(false);
+
+  // 🖼️ Função para carregar imagem
   const handleImagemChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
@@ -54,16 +73,20 @@ export const CadastrarVoluntario = () => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
-  // Busca o voluntário na API
+  // 🔍 Buscar usuário
   const handlePesquisar = async () => {
     if (!pesquisa.trim()) {
-      alert("Digite algo para pesquisar!");
+      setSnackbarMessage("Digite algo para pesquisar!");
+      setSnackbarSeverity("warning");
+      setSnackbarOpen(true);
       return;
     }
 
     try {
-      const response = await axios.get("http://localhost:5089/Usuario/buscar-usuarios"); 
-      const usuarios = Array.isArray(response.data) ? response.data : [response.data]; 
+      const response = await axios.get(BaseUrl + "/Usuario/buscar-usuarios");
+      const usuarios = Array.isArray(response.data)
+        ? response.data
+        : [response.data];
 
       const usuarioEncontrado = usuarios.find(
         (u: any) =>
@@ -73,7 +96,10 @@ export const CadastrarVoluntario = () => {
       );
 
       if (usuarioEncontrado) {
-        alert("Usuário encontrado!");
+        setSnackbarMessage("Usuário encontrado!");
+        setSnackbarSeverity("success");
+        setSnackbarOpen(true);
+
         const data = {
           id: usuarioEncontrado.id,
           nome: usuarioEncontrado.nome || "",
@@ -95,56 +121,78 @@ export const CadastrarVoluntario = () => {
         setFormData(data);
         setOriginalData(data);
       } else {
-        alert("Usuário não encontrado!");
+        setSnackbarMessage("Usuário não encontrado!");
+        setSnackbarSeverity("warning");
+        setSnackbarOpen(true);
       }
     } catch (error) {
       console.error("Erro ao buscar usuário:", error);
-      alert("Erro ao buscar usuário. Verifique a API.");
+      setSnackbarMessage("Erro ao buscar usuário. Verifique a API.");
+      setSnackbarSeverity("error");
+      setSnackbarOpen(true);
     }
   };
 
-  // Função para editar usuário
+  // ✏️ Editar usuário
   const handleEditar = async () => {
     if (!originalData) {
-      alert("Pesquise um usuário primeiro!");
+      setSnackbarMessage("Pesquise um usuário primeiro!");
+      setSnackbarSeverity("warning");
+      setSnackbarOpen(true);
       return;
     }
 
     const camposAlterados = Object.keys(formData).some(
-      key => (formData as any)[key] !== (originalData as any)[key]
+      (key) => (formData as any)[key] !== (originalData as any)[key]
     );
 
     if (!camposAlterados) {
-      alert("Nenhum dado foi alterado!");
+      setSnackbarMessage("Nenhum dado foi alterado!");
+      setSnackbarSeverity("info");
+      setSnackbarOpen(true);
       return;
     }
 
     try {
-      await axios.put(`http://localhost:5089/Usuario/atualizar-usuario/${formData.id}`, {
-        ...formData,
-        ativo: true,
-      });
-      alert("Usuário atualizado com sucesso!");
+      await axios.put(
+        BaseUrl + `/Usuario/atualizar-usuario/${formData.id}`,
+        {
+          ...formData,
+          ativo: true,
+        }
+      );
+      setSnackbarMessage("Usuário atualizado com sucesso!");
+      setSnackbarSeverity("success");
+      setSnackbarOpen(true);
       setOriginalData(formData);
     } catch (error) {
       console.error("Erro ao atualizar usuário:", error);
-      alert("Erro ao atualizar usuário. Verifique a API.");
+      setSnackbarMessage("Erro ao atualizar usuário. Verifique a API.");
+      setSnackbarSeverity("error");
+      setSnackbarOpen(true);
     }
   };
 
-  // Função para deletar usuário
+  // 🗑️ Deletar usuário
   const handleDeletar = async () => {
     if (!formData.id) {
-      alert("Pesquise um usuário antes de deletar!");
+      setSnackbarMessage("Pesquise um usuário antes de deletar!");
+      setSnackbarSeverity("warning");
+      setSnackbarOpen(true);
       return;
     }
 
-    const confirmacao = window.confirm("Tem certeza que deseja deletar este usuário?");
+    const confirmacao = window.confirm(
+      "Tem certeza que deseja deletar este usuário?"
+    );
     if (!confirmacao) return;
 
     try {
-      await axios.delete(`http://localhost:5089/Usuario/deletar-usuario/${formData.id}`);
-      alert("Usuário deletado com sucesso!");
+      await axios.delete(BaseUrl + `/Usuario/deletar-usuario/${formData.id}`);
+      setSnackbarMessage("Usuário deletado com sucesso!");
+      setSnackbarSeverity("success");
+      setSnackbarOpen(true);
+
       // Limpa o formulário após exclusão
       setFormData({
         id: 0,
@@ -168,13 +216,10 @@ export const CadastrarVoluntario = () => {
       setImagemPerfil(null);
     } catch (error) {
       console.error("Erro ao deletar usuário:", error);
-      alert("Erro ao deletar usuário. Verifique a API.");
+      setSnackbarMessage("Erro ao deletar usuário. Verifique a API.");
+      setSnackbarSeverity("error");
+      setSnackbarOpen(true);
     }
-  };
-
-  const handleSalvar = () => {
-    console.log("Dados do voluntário:", formData);
-    // Aqui você pode fazer o POST
   };
 
   return (
@@ -237,54 +282,6 @@ export const CadastrarVoluntario = () => {
           boxShadow: 3,
         }}
       >
-        {/* IMAGEM DE PERFIL */}
-        <Box
-          sx={{
-            width: 250,
-            height: 350,
-            backgroundColor: "#f4f4f4",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            borderRadius: 2,
-            boxShadow: 1,
-            mr: 5,
-            position: "relative",
-            overflow: "hidden",
-          }}
-        >
-          {imagemPerfil ? (
-            <img
-              src={imagemPerfil}
-              alt="Imagem do Voluntário"
-              style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                borderRadius: "8px",
-              }}
-            />
-          ) : (
-            <Typography variant="body1" align="center">
-              Imagem de Perfil
-            </Typography>
-          )}
-
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleImagemChange}
-            style={{
-              position: "absolute",
-              width: "100%",
-              height: "100%",
-              opacity: 0,
-              cursor: "pointer",
-            }}
-          />
-        </Box>
-
-        {/* CAMPOS DO FORM */}
         <Box sx={{ flex: 1 }}>
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
             <InputText id="nome" label="Nome" value={formData.nome} onChange={handleChange} tamanho="48" />
@@ -316,7 +313,7 @@ export const CadastrarVoluntario = () => {
             <InputText id="complemento" label="Complemento" value={formData.complemento} onChange={handleChange} tamanho="48" />
           </Box>
 
-          {/* COMBOBOX DE TIPO DE USUÁRIO */}
+          {/* COMBOBOX */}
           <Box sx={{ display: "flex", justifyContent: "start", mt: 2 }}>
             <FormControl sx={{ minWidth: 200 }}>
               <InputLabel id="tipo-usuario-label">Tipo de Usuário</InputLabel>
@@ -344,6 +341,18 @@ export const CadastrarVoluntario = () => {
       </Box>
 
       <CustomFooter />
+
+      {/* 📢 Snackbar global */}
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={4000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert onClose={handleCloseSnackbar} severity={snackbarSeverity} variant="filled" sx={{ width: "100%" }}>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

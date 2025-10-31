@@ -8,9 +8,32 @@ const Navbar = () => {
   const [menuAberto, setMenuAberto] = useState(false);
   const [cadastrosOpen, setCadastrosOpen] = useState(false);
 
+  const horaLogin = localStorage.getItem('HoraLogin');
+  const tipo = localStorage.getItem('tipoUsuario');
+  
+
+  let agora = new Date();
+  let sessaoAtiva = false;
+
+  if (horaLogin) {
+
+    const horaExpiracao = new Date(horaLogin);
+    if (horaExpiracao > agora) {
+        sessaoAtiva = true;
+    } else {
+        sessaoAtiva = false;
+    }
+} else {
+    sessaoAtiva = false;
+}
+
+if (!sessaoAtiva) {
+    window.location.href = '/login';
+}
+
   const token = localStorage.getItem('token');
   const dadosToken = token ? JSON.parse(atob(token.split('.')[1])) : null;
-  const roleUser = dadosToken.Role;
+  // const roleUser = dadosToken.Role;
 
   const toggleMenu = () => {
     setMenuAberto(!menuAberto);
@@ -38,9 +61,11 @@ const Navbar = () => {
             {/* <Link to="/cadastrarUsuario" onClick={() => setMenuAberto(false)}>
               Cadastrar Usuário
             </Link> */}
+            { tipo == 'Administrador' && (
             <Link to="/cadastrarVoluntario" onClick={() => setMenuAberto(false)}>
               Cadastrar Voluntário
             </Link>
+            )}
             <Link to="/cadastrarPet" onClick={() => setMenuAberto(false)}>
               Cadastrar Pet
             </Link>
